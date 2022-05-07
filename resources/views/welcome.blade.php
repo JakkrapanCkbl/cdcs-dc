@@ -71,7 +71,7 @@
                                      @if (Route::has('login'))
                                         @auth
                                             <li><a href="{{ url('/home') }}">CDCS</a></li>
-                                            <li><a href="{{ url('#') }}">Files Manager</a></li>
+                                            {{-- <li><a href="{{ url('#') }}">Files Manager</a></li> --}}
                                         @else
                                             <li><a href="{{ route('login') }}">Login</a></li>
                                             {{-- @if (Route::has('register'))

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Embed PDF Doument</title>
+    <title>CKSTJV | CDCS-DC</title>
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 </head>
 <body>

@@ -57,8 +57,7 @@
                                 @else
                                     <input type="text" class="form-control" name="inputText" id="inputText">
                                 @endif
-                                
-                               
+                                                               
                             </div>
                            
                             <div class="col-md-2">
@@ -150,9 +149,11 @@
                                                                     @foreach ($outgoings as $outgoing)
                                                                         <tr>
                                                                             <td>
-                                                                                <a href="{{ route('viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
+                                                                                {{-- <a href="{{ route('viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
                                                                                 {{ $outgoing->RegisterID }}
-                                                                                </a>
+                                                                                </a> --}}
+                                                                                 <a href="{{ route('viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
+                                                                                {{ $outgoing->RegisterID }}
                                                                             </td>
                                                                             <td>{{ date('d-M-y', strtotime($outgoing->IssuedDate)) }}</td>
                                                                             <td>{{ Str::limit($outgoing->DocFrom, 10) }}</td>
