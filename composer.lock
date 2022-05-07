@@ -4,8 +4,67 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d5c3912e0b0eaf7de4cf89c2a741739",
+    "content-hash": "dee2463b142f4b064a9d05e3fac98fa1",
     "packages": [
+        {
+            "name": "academe/laravel-azure-file-storage-driver",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/academe/laravel-azure-file-storage-driver.git",
+                "reference": "6616944e55248b317bef83c24fa39f2ee780aee7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/academe/laravel-azure-file-storage-driver/zipball/6616944e55248b317bef83c24fa39f2ee780aee7",
+                "reference": "6616944e55248b317bef83c24fa39f2ee780aee7",
+                "shasum": ""
+            },
+            "require": {
+                "consilience/flysystem-azure-file-storage": "^0.1.1",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.3|~3.4|~3.5|~3.6",
+                "phpunit/phpunit": "^6.0|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Academe\\Laravel\\AzureFileStorageDriver\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Academe\\Laravel\\AzureFileStorageDriver\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jason Judge",
+                    "email": "jason@academe.co.uk"
+                }
+            ],
+            "description": "Azure File Storage filesystem driver for Laravel",
+            "homepage": "https://github.com/academe",
+            "keywords": [
+                "azure",
+                "driver",
+                "file storage",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/academe/laravel-azure-file-storage-driver/issues",
+                "source": "https://github.com/academe/laravel-azure-file-storage-driver/tree/master"
+            },
+            "time": "2019-11-20T13:04:49+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.1.1",
@@ -121,6 +180,69 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "consilience/flysystem-azure-file-storage",
+            "version": "0.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/consilience/flysystem-azure-file-storage.git",
+                "reference": "f734f8809af2b690678543aefa52204cfb7c4afe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/consilience/flysystem-azure-file-storage/zipball/f734f8809af2b690678543aefa52204cfb7c4afe",
+                "reference": "f734f8809af2b690678543aefa52204cfb7c4afe",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^1.0.50",
+                "microsoft/azure-storage-file": "^1.0",
+                "php": ">=7.2.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "^5.7.25"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Consilience\\Flysystem\\Azure\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
+                },
+                {
+                    "name": "Ilya Rogojin",
+                    "email": "ilya.rogojin@gmail.com"
+                },
+                {
+                    "name": "Consilience Media Ltd",
+                    "email": "webteam@consil.co.uk"
+                },
+                {
+                    "name": "Jason Judge",
+                    "email": "jason@academe.co.uk"
+                }
+            ],
+            "description": "Flysystem adapter for Windows Azure File Storage",
+            "support": {
+                "issues": "https://github.com/consilience/flysystem-azure-file-storage/issues",
+                "source": "https://github.com/consilience/flysystem-azure-file-storage/tree/0.1.6"
+            },
+            "time": "2020-11-04T00:01:32+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -1543,6 +1665,102 @@
                 }
             ],
             "time": "2022-04-17T13:12:02+00:00"
+        },
+        {
+            "name": "microsoft/azure-storage-common",
+            "version": "1.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Azure/azure-storage-common-php.git",
+                "reference": "8ca7b1bf4c9ca7c663e75a02a0035b05b37196a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Azure/azure-storage-common-php/zipball/8ca7b1bf4c9ca7c663e75a02a0035b05b37196a0",
+                "reference": "8ca7b1bf4c9ca7c663e75a02a0035b05b37196a0",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0|^7.0",
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MicrosoftAzure\\Storage\\Common\\": "src/Common"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Azure Storage PHP Client Library",
+                    "email": "dmsh@microsoft.com"
+                }
+            ],
+            "description": "This project provides a set of common code shared by Azure Storage Blob, Table, Queue and File PHP client libraries.",
+            "keywords": [
+                "azure",
+                "common",
+                "php",
+                "sdk",
+                "storage"
+            ],
+            "support": {
+                "issues": "https://github.com/Azure/azure-storage-common-php/issues",
+                "source": "https://github.com/Azure/azure-storage-common-php/tree/v1.5.2"
+            },
+            "time": "2021-10-09T03:03:47+00:00"
+        },
+        {
+            "name": "microsoft/azure-storage-file",
+            "version": "1.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Azure/azure-storage-file-php.git",
+                "reference": "75432805ba5849ad81e455a449273ab544ff8212"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Azure/azure-storage-file-php/zipball/75432805ba5849ad81e455a449273ab544ff8212",
+                "reference": "75432805ba5849ad81e455a449273ab544ff8212",
+                "shasum": ""
+            },
+            "require": {
+                "microsoft/azure-storage-common": "~1.5",
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MicrosoftAzure\\Storage\\File\\": "src/File"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Azure Storage PHP Client Library",
+                    "email": "dmsh@microsoft.com"
+                }
+            ],
+            "description": "This project provides a set of PHP client libraries that make it easy to access Microsoft Azure Storage File APIs.",
+            "keywords": [
+                "azure",
+                "file",
+                "php",
+                "sdk",
+                "storage"
+            ],
+            "support": {
+                "issues": "https://github.com/Azure/azure-storage-file-php/issues",
+                "source": "https://github.com/Azure/azure-storage-file-php/tree/v1.2.5"
+            },
+            "time": "2021-10-09T03:30:00+00:00"
         },
         {
             "name": "monolog/monolog",

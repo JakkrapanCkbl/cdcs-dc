@@ -8,8 +8,9 @@
 <body>
     <div class="container">
         {{-- <h4>id = {{ $id }}</h4>
-        <h4>fullpath = {{ $fullpath }}</h4> --}}
-        {{-- <h4>{{ Auth::user()->ViewConfidential }}</h4> --}}
+        <h4>fullpath = {{ $fullpath }}</h4>
+        <h4>{{ Auth::user()->ViewConfidential }}</h4> --}}
+        
         <embed src="{{ asset($fullpath).'#zoom=100&scrollbar=1&toolbar=1&navpanes=1' }}" type="application/pdf" width="100%" height="900px" />
         
         

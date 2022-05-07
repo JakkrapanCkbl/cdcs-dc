@@ -24,3 +24,10 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::get('/viewpdf/{id}', [CdcsController::class, 'view_pdf'])->name('viewpdf');
+Route::get('/test', [CdcsController::class, 'getdrive']);
+
+//  Route::get('test', function() {
+//         dd(Storage::disk('azure-file-storage'));
+//         // dd(Storage::disk('azure-file-storage')->listAll());
+//         // dd(Storage::disk('azure-file-storage')->exists('file.txt'));
+//     });

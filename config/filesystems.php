@@ -55,6 +55,26 @@ return [
             'visibility' => 'public',
         ],
 
+        'azure' => [
+            // The driver provided by this package.
+            'driver' => 'azure-file-storage',
+
+            // Account credentials.
+            'storageAccount' => env('AZURE_FILE_STORAGE_ACCOUNT'),
+            'storageAccessKey' => env('AZURE_FILE_STORAGE_ACCESS_KEY'),
+
+            // The file share.
+            // This driver supports one file share at a time (you cannot
+            // copy or move files between shares natively).
+            'fileShareName' => env('AZURE_FILE_STORAGE_SHARE_NAME'),
+
+            // Optional settings
+            'url' => env('AZURE_URL'),
+            // 'disableRecursiveDelete' => false,
+            // 'driverOptions' => [],
+            // 'root' => 'root/directory', // Without leading '/'
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

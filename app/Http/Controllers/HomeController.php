@@ -27,7 +27,7 @@ class HomeController extends Controller
         
         $incomings = DB::table('vwShowGrid')
             ->where('ClassID','=','I')
-            ->where('ShowContract','=','S1')
+            ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%IB%')
             ->orderBy('IssuedDate', 'DESC')
             ->paginate(50);
@@ -35,7 +35,7 @@ class HomeController extends Controller
         
         $outgoings  = DB::table('vwShowGridOut')
             ->where('ClassID','=','O')
-            ->where('ShowContract','=','S1')
+            ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%OB%')
             ->orderBy('IssuedDate', 'DESC')
             ->paginate(50);

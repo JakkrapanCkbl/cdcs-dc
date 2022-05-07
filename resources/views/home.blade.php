@@ -13,22 +13,22 @@
                                 <label for="inputContract" class="form-label">Contract</label>
                                 <select name="inputContract" id="inputContract" class="form-select">
                                     @if(isset($ct))
-                                        @if($ct == 'S1')
-                                            <option selected>S1</option>
-                                            <option>S2</option>
+                                        @if($ct == '02')
+                                            <option selected>02</option>
+                                            <option>03</option>
                                             <option>All</option>
-                                        @elseif($ct == 'S2')
-                                            <option>S1</option>
-                                            <option selected>S2</option>
+                                        @elseif($ct == '03')
+                                            <option>02</option>
+                                            <option selected>03</option>
                                             <option>All</option>
                                         @else
-                                            <option>S1</option>
-                                            <option>S2</option>
+                                            <option>02</option>
+                                            <option>03</option>
                                             <option selected>All</option>
                                         @endif
                                     @else
-                                        <option selected>S1</option>
-                                        <option>S2</option>
+                                        <option selected>02</option>
+                                        <option>03</option>
                                         <option>All</option>
                                     @endif
                               </select>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 
+
 class CdcsController extends Controller
 {
     
@@ -43,10 +44,15 @@ class CdcsController extends Controller
             // dd($mm_yyyy);
             // get fn
             $fn = $this->GetFn($id);
+            // dd($fn);
             //  $fullpath = 'storage/cdcs-ppls/docs/00-2022/PLS1-00-IB-BUDG-00001/PLS1-00-IB-BUDG-00001-742266341.pdf';
             // storage/cdcs-ppls/docs/00-2022/PLS1-00-IB-BUDG-00001/PLS1-00-IB-BUDG-00001-742266341.pdf
             // storage/cdcs-ppls/docs/01-2022/PLS1-01-IM-CONT-00018/PLS1-01-IM-CONT-00018-30APR22-01.pdf
-            $fullpath = 'storage/cdcs-ppls/docs/'.$mm_yyyy.'/'.$id.'/'.$fn;
+            // $fullpath = 'storage/cdcs-ppls/docs/'.$mm_yyyy.'/'.$id.'/'.$fn;
+            // $accesskey = "?sv=2020-08-04&ss=f&srt=sco&sp=rwdlc&se=2027-12-31T11:19:49Z&st=2022-03-16T03:19:49Z&spr=https&sig=BH4be9fKMnR%2BmnTd%2FPwdnJbOMleYYpAS%2BywaTpank60%3D";
+            $accesskey = env("AZURE_ACCESS_KEY");
+            // dd($accesskey);
+            $fullpath = Storage::disk('azure')->url('').'Letters/'.$mm_yyyy.'/'.$id.'/'.$fn.$accesskey;
             // dd($fullpath);
             
             return view('viewpdf',[
@@ -75,8 +81,7 @@ class CdcsController extends Controller
     public function GetFn($id) {
         $result = DB::table('Register_Files')
         ->where('RegisterID','=',$id)
-        ->where('FileName','like','%-01.pdf')
-        ->where('FcdcOnly','=','0')
+        ->where('FileName','like','%.pdf')
         ->first();
         if ($result == null) {
             return redirect()->back() ->with('alert', $id.' is nothing.');
@@ -97,10 +102,6 @@ class CdcsController extends Controller
             }
     }
 
-
-
-
-
     public function show($id) {
         // return $id;
         $data = [
@@ -118,4 +119,20 @@ class CdcsController extends Controller
             ]);
         }
     }
+
+    public function getdrive(){
+        // dd(Storage::disk('azure'));
+        // https://dccrstorage.file.core.windows.net/docs/Letters/00-2022/DC02-00-IE-PM02-00001/DC02-00-IE-PM02-000011632228137.pdf
+        if (Storage::disk('azure')->exists('test1.pdf')) {
+            // dd('okx');
+            $contents = Storage::disk('azure')->url('test1.pdf');
+            dd($contents);
+        }
+        else{
+            dd('nothing x');
+        }
+        return true;
+    }
+
+
 }
