@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,27 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('home');
+    public function index(Request $request)
+    {     
+        
+        $incomings = DB::table('vwShowGrid')
+            ->where('ClassID','=','I')
+            ->where('ShowContract','=','S1')
+            ->where('RegisterID','not like','%IB%')
+            ->orderBy('IssuedDate', 'DESC')
+            ->paginate(50);
+        $incomings->appends($request->all());
+        
+        $outgoings  = DB::table('vwShowGridOut')
+            ->where('ClassID','=','O')
+            ->where('ShowContract','=','S1')
+            ->where('RegisterID','not like','%OB%')
+            ->orderBy('IssuedDate', 'DESC')
+            ->paginate(50);
+        $outgoings->appends($request->all());
+
+        return view('home',['incomings'=>$incomings, 'outgoings'=>$outgoings]);
     }
+
+    
 }
