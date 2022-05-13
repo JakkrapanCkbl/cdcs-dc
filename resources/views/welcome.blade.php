@@ -70,10 +70,14 @@
                                 <ul>
                                      @if (Route::has('login'))
                                         @auth
-                                            <li><a href="{{ url('/home') }}">CDCS</a></li>
+                                            {{-- <li><a href="{{ url('/home') }}">CDCS</a></li> --}}
                                             {{-- <li><a href="{{ url('#') }}">Files Manager</a></li> --}}
+                                            <li><a href="{{ route('home') }}">IT Data</a></li>
+                                            <li><a href="{{ route('it.home') }}">IT Data</a></li>
+                                            
                                         @else
-                                            <li><a href="{{ route('login') }}">Login</a></li>
+                                            <li><a href="{{ route('login') }}">CDCS Login</a></li>
+                                            <li><a href="{{ route('it.home') }}">IT Data</a></li>
                                             {{-- @if (Route::has('register'))
                                                 <li><a href="{{ route('register') }}">Register</a></li>
                                             @endif --}}

@@ -18,6 +18,13 @@ return [
         'passwords' => 'users',
     ],
 
+    'it' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\User::Class,
+    ],
+
+    
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -46,6 +53,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'it' => [
+            'driver' => 'session',
+            'provider' => 'its',
+        ],
     ],
 
     /*
@@ -67,6 +79,11 @@ return [
 
     'providers' => [
         'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+
+        'its' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
@@ -98,6 +115,11 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
+        ],
+
+        'its' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
         ],
     ],
 
