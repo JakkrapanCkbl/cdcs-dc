@@ -23,6 +23,11 @@ return [
         'model' => App\Models\User::Class,
     ],
 
+    'cdcs' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\User::Class,
+    ],
+
     
 
     /*
@@ -58,6 +63,11 @@ return [
             'driver' => 'session',
             'provider' => 'its',
         ],
+
+        'cdcs' => [
+            'driver' => 'session',
+            'provider' => 'cdcss',
+        ],
     ],
 
     /*
@@ -84,6 +94,11 @@ return [
         ],
 
         'its' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+
+        'cdcss' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
@@ -115,9 +130,14 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
-        ],
+        ],       
 
         'its' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+
+        'cdcss' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],

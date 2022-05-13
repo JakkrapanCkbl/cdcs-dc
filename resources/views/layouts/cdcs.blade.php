@@ -80,13 +80,13 @@
                                             </li>
                                         @endif --}}
                                     @else
-                                        <li class="dropdown-submenu"><span class="dropdown-menu-title-only">{{ Auth::user()->LoginName }}</span>
+                                        <li class="dropdown-submenu"><span class="dropdown-menu-title-only">{{ Auth::guard('cdcs')->user()->LoginName }}</span>
                                             <ul class="dropdown-menu">
-                                                <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                <li><a href="{{ route('cdcs.logout') }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
                                                         {{ __('Logout') }}
                                                     </a>
-                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                    <form id="logout-form" action="{{ route('cdcs.logout') }}" method="POST" class="d-none">
                                                         @csrf
                                                     </form>
                                                 </li>

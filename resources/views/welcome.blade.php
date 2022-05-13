@@ -68,21 +68,18 @@
                         <div class="container">
                             <nav>
                                 <ul>
-                                     @if (Route::has('login'))
+                                    <li><a href="{{ route('cdcs.login') }}">CDCS</a></li>
+                                    <li><a href="{{ route('it.login') }}">IT Data</a></li>
+                                    {{-- @if (Route::has('login'))
                                         @auth
-                                            {{-- <li><a href="{{ url('/home') }}">CDCS</a></li> --}}
-                                            {{-- <li><a href="{{ url('#') }}">Files Manager</a></li> --}}
-                                            <li><a href="{{ route('home') }}">IT Data</a></li>
-                                            <li><a href="{{ route('it.home') }}">IT Data</a></li>
-                                            
+                                            <li><a href="{{ url('/home') }}">CDCS</a></li>
+                                            <li><a href="{{ url('#') }}">Files Manager</a></li>
                                         @else
-                                            <li><a href="{{ route('login') }}">CDCS Login</a></li>
-                                            <li><a href="{{ route('it.home') }}">IT Data</a></li>
-                                            {{-- @if (Route::has('register'))
+                                            @if (Route::has('register'))
                                                 <li><a href="{{ route('register') }}">Register</a></li>
-                                            @endif --}}
+                                            @endif
                                         @endif
-                                    @endif
+                                    @endif --}}
                                 </ul>
                             </nav>
                         </div>

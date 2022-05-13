@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CdcsController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\it\ItController;
+use App\Http\Controllers\It\ItController;
+use App\Http\Controllers\Cdcs\CdcsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +21,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/search', [SearchController::class, 'search'])->name('search');
-Route::get('/viewpdf/{id}', [CdcsController::class, 'view_pdf'])->name('viewpdf');
-Route::get('/test', [CdcsController::class, 'getdrive']);
+
+// Route::get('/test', [CdcsController::class, 'getdrive']);
 //  Route::get('test', function() {
 //         dd(Storage::disk('azure-file-storage'));
 //         // dd(Storage::disk('azure-file-storage')->listAll());
@@ -41,5 +38,20 @@ Route::prefix('it')->name('it.')->group(function(){
     Route::middleware(['auth:it','PreventBackHistory'])->group(function(){
         Route::view('/home','it.home')->name('home');
         Route::post('logout',[ItController::class,'logout'])->name('logout');
+    });
+});
+
+Route::prefix('cdcs')->name('cdcs.')->group(function(){
+    Route::middleware(['guest:cdcs','PreventBackHistory'])->group(function(){
+        Route::view('/login','cdcs.login')->name('login');
+        Route::post('/check',[CdcsController::class,'check'])->name('check');
+    });
+
+    Route::middleware(['auth:cdcs','PreventBackHistory'])->group(function(){
+        // Route::view('/home','cdcs.home')->name('home');
+        Route::get('/home', [CdcsController::class, 'index'])->name('home');
+        Route::post('logout',[CdcsController::class,'logout'])->name('logout');
+        Route::get('/search', [CdcsController::class, 'search'])->name('search');
+        Route::get('/viewpdf/{id}', [CdcsController::class, 'view_pdf'])->name('viewpdf');
     });
 });

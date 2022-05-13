@@ -1,17 +1,102 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Cdcs;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-// use App\Models\User;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
 
 class CdcsController extends Controller
 {
     
+    public function index(Request $request)
+    {     
+        
+        $incomings = DB::table('vwShowGrid')
+            ->where('ClassID','=','I')
+            ->where('ShowContract','=','02')
+            ->where('RegisterID','not like','%IB%')
+            ->orderBy('IssuedDate', 'DESC')
+            ->paginate(20);
+        $incomings->appends($request->all());  //for paginate use
+        
+        $outgoings  = DB::table('vwShowGridOut')
+            ->where('ClassID','=','O')
+            ->where('ShowContract','=','02')
+            ->where('RegisterID','not like','%OB%')
+            ->orderBy('IssuedDate', 'DESC')
+            ->paginate(20);
+        $outgoings->appends($request->all()); //for paginate use
+
+        return view('cdcs.home',['incomings'=>$incomings, 'outgoings'=>$outgoings]);
+    }
+    
+    function check(Request $request){
+        // $request->validate([
+        //     'loginname'=>'required|loginname|exists:users,loginname',
+        //     'password'=>'required'
+        // ]);
+
+        $creds = $request->only('loginname','password');
+
+        if(Auth::guard('cdcs')->attempt($creds)) {
+            return redirect()->route('cdcs.home');
+        }else{
+            return redirect()->route('cdcs.login')->with('fail','Incorrect Credentials');
+        }
+    }
+
+    function logout(){
+        // dd('ok');
+        Auth::guard('cdcs')->logout();
+        return redirect('/');
+    }
+
+    public function search(Request $request) {
+        // if(isset($_GET['inputText']) && strlen($_GET['inputText']) > 2) {
+        // dd($request->get('inputContract') . 'xx' ); 
+
+        $ct = $request->get('inputContract'); 
+        $input = $request->get('inputText');
+        if ($ct == 'All') {
+            $ct = '%';
+        }
+        $sf = $request->get('inputField');
+        if ($sf=='Subject') {
+            $sf = 'DocSubject';
+        }
+        
+        if(isset($_GET['inputText'])) {
+            $search_text = $_GET['inputText'];
+            $incomings = DB::table('vwShowGrid')
+                ->where('ClassID','=','I')
+                ->where('RegisterID','not like','%IB%')
+                ->where('ShowContract', 'like','%'.$ct.'%')
+                ->where(function($query) use ($sf, $search_text){
+                    $query->where($sf,'like','%'.$search_text.'%');
+                })
+                ->orderBy('IssuedDate', 'DESC')
+                ->paginate(20);
+                $incomings->appends($request->all());
+            
+            $outgoings  = DB::table('vwShowGridOut')
+                ->where('ClassID','=','O')
+                ->where('RegisterID','not like','%OB%')
+                ->where('ShowContract', 'like','%'.$ct.'%')
+                ->where(function($query) use ($sf, $search_text){
+                    $query->where($sf,'like','%'.$search_text.'%');
+                })
+                ->orderBy('IssuedDate', 'DESC')
+                ->paginate(20);
+                $outgoings->appends($request->all());
+            
+            return view('cdcs.home',['incomings'=>$incomings, 'outgoings'=>$outgoings, 'ct'=>$ct, 'sf'=>$sf, 'inputs'=>$input]);
+        }
+    }
 
     public function view_pdf($id)
     {
@@ -25,7 +110,8 @@ class CdcsController extends Controller
 
         if ($docconf == '1') {
             // dd('aut conf = '.Auth::user()->ViewConfidential);
-            if (Auth::user()->ViewConfidential) {
+            // Auth::guard('it')->user()->LoginName
+            if (Auth::guard('cdcs')-user()->ViewConfidential) {
                 $isopen = '1';
             }else{
                 $isopen = '0';
@@ -55,7 +141,7 @@ class CdcsController extends Controller
             $fullpath = Storage::disk('azure')->url('').'Letters/'.$mm_yyyy.'/'.$id.'/'.$fn.$accesskey;
             // dd($fullpath);
             
-            return view('viewpdf',[
+            return view('cdcs.viewpdf',[
                 'id' => $id,
                 'fullpath' => $fullpath 
             ]);
@@ -133,6 +219,5 @@ class CdcsController extends Controller
         }
         return true;
     }
-
 
 }

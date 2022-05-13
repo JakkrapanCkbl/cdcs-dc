@@ -26,6 +26,9 @@ class RedirectIfAuthenticated
                 if($guard === 'it'){
                     return redirect()->route('it.home');
                 }
+                if($guard === 'cdcs'){
+                    return redirect()->route('cdcs.home');
+                }
 
                 return redirect(RouteServiceProvider::HOME);
             }
