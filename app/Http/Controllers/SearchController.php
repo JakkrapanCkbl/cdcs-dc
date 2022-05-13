@@ -32,8 +32,8 @@ class SearchController extends Controller
                     $query->where($sf,'like','%'.$search_text.'%');
                 })
                 ->orderBy('IssuedDate', 'DESC')
-                ->paginate(10);
-            // $incomings->appends($request->all());
+                ->paginate(20);
+                $incomings->appends($request->all());
             
             $outgoings  = DB::table('vwShowGridOut')
                 ->where('ClassID','=','O')
@@ -43,8 +43,8 @@ class SearchController extends Controller
                     $query->where($sf,'like','%'.$search_text.'%');
                 })
                 ->orderBy('IssuedDate', 'DESC')
-                ->paginate(10);
-            // $outgoings->appends($request->all());
+                ->paginate(20);
+                $outgoings->appends($request->all());
             
             return view('home',['incomings'=>$incomings, 'outgoings'=>$outgoings, 'ct'=>$ct, 'sf'=>$sf, 'inputs'=>$input]);
         }

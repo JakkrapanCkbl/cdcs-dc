@@ -136,7 +136,7 @@ It allows organizations track correspondence from a variety of resources includi
                 </div>
                 <div class="row" data-animate="animate__fadeInUp">
                     <div class="col-lg-12">
-                        <img class="img-fluid" src="images/other/responsive-1.jpg" alt="Welcome to POLO">
+                        <img class="img-fluid" src="images/other/responsive-1.jpg" alt="Welcome to CDCS-DC">
                     </div>
                 </div>
             </div>

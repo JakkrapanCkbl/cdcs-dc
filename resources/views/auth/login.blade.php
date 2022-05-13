@@ -21,7 +21,8 @@
     <!-- Body Inner -->
     <div class="body-inner">
         <!-- Section -->
-        <section class="pt-5 pb-5" data-bg-image="{{ asset('images/pages/1.jpg') }}">
+        {{-- <section class="pt-5 pb-5" data-bg-image="{{ asset('images/pages/1.jpg') }}"> --}}
+        <section class="pt-5 pb-5" data-bg-image="{{ asset('images/slider/pexels-annam-w-1057858.jpg') }}">
             <div class="container-fluid d-flex flex-column">
                 <div class="row align-items-center min-vh-100">
                     <div class="col-md-6 col-lg-4 col-xl-3 mx-auto">

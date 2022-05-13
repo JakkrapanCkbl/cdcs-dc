@@ -30,16 +30,16 @@ class HomeController extends Controller
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%IB%')
             ->orderBy('IssuedDate', 'DESC')
-            ->paginate(50);
-        $incomings->appends($request->all());
+            ->paginate(20);
+        $incomings->appends($request->all());  //for paginate use
         
         $outgoings  = DB::table('vwShowGridOut')
             ->where('ClassID','=','O')
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%OB%')
             ->orderBy('IssuedDate', 'DESC')
-            ->paginate(50);
-        $outgoings->appends($request->all());
+            ->paginate(20);
+        $outgoings->appends($request->all()); //for paginate use
 
         return view('home',['incomings'=>$incomings, 'outgoings'=>$outgoings]);
     }
