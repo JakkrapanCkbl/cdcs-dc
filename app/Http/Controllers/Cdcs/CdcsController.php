@@ -152,6 +152,63 @@ class CdcsController extends Controller
        
     }
 
+    public function download_pdf($id)
+    {
+        // dd($id);
+        //PDF file is stored under project/public/download/info.pdf
+        // $file= public_path(). "/download/info.pdf";
+        // dd($id);
+        if (($id == null) || ($id == '')) {
+            return redirect()->back();
+        }
+
+        $docconf = $this->CheckDocConfidentail($id);
+        // dd($docconf);
+
+        if ($docconf == '1') {
+            // dd('aut conf = '.Auth::user()->ViewConfidential);
+            // Auth::guard('it')->user()->LoginName
+            if (Auth::guard('cdcs')-user()->ViewConfidential) {
+                $isopen = '1';
+            }else{
+                $isopen = '0';
+            }
+        }else{
+            $isopen = '1';
+        }
+        // dd('is open = '.$isopen);
+
+        if ($isopen == '1') {
+            // substr("LS1-00-IB-BUDG-00001", 0, 2);
+            $mm = substr($id, 5, 2);
+            // dd($mm);
+            // get MM-YYYY
+            $mm_yyyy = $this->GetMY_Folder($mm);
+            // dd($mm_yyyy);
+            // get fn
+            $fn = $this->GetFn($id);
+            // dd($fn);
+            //  $fullpath = 'storage/cdcs-ppls/docs/00-2022/PLS1-00-IB-BUDG-00001/PLS1-00-IB-BUDG-00001-742266341.pdf';
+            // storage/cdcs-ppls/docs/00-2022/PLS1-00-IB-BUDG-00001/PLS1-00-IB-BUDG-00001-742266341.pdf
+            // storage/cdcs-ppls/docs/01-2022/PLS1-01-IM-CONT-00018/PLS1-01-IM-CONT-00018-30APR22-01.pdf
+            // $fullpath = 'storage/cdcs-ppls/docs/'.$mm_yyyy.'/'.$id.'/'.$fn;
+            // $accesskey = "?sv=2020-08-04&ss=f&srt=sco&sp=rwdlc&se=2027-12-31T11:19:49Z&st=2022-03-16T03:19:49Z&spr=https&sig=BH4be9fKMnR%2BmnTd%2FPwdnJbOMleYYpAS%2BywaTpank60%3D";
+            $accesskey = env("AZURE_ACCESS_KEY");
+            // dd($accesskey);
+            $fullpath = Storage::disk('azure')->url('').'Letters/'.$mm_yyyy.'/'.$id.'/'.$fn.$accesskey;
+            //  dd($fullpath);
+            $headers = array(
+                'Content-Type: application/pdf',
+                );
+
+            return Response::download($fullpath, 'filename.pdf', $headers);
+        }else{
+            return redirect()->back() ->with('alert', 'Confidentail Document! ');
+        }
+        
+    }
+
+
     public function GetMY_Folder($mm) {
         $result = DB::table('ProjectCalendar')
         ->where('ProjectMonth','=',$mm)

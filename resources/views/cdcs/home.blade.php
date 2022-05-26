@@ -97,6 +97,9 @@
                                                                     @foreach ($incomings as $incoming)
                                                                         <tr>
                                                                             <td>
+                                                                                {{-- <a href="{{ route('cdcs.downloadpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
+                                                                                {{ $incoming->RegisterID }}
+                                                                                </a> --}}
                                                                                 <a href="{{ route('cdcs.viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
                                                                                 {{ $incoming->RegisterID }}
                                                                                 </a>
@@ -154,6 +157,10 @@
                                                                                 </a> --}}
                                                                                  <a href="{{ route('cdcs.viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
                                                                                 {{ $outgoing->RegisterID }}
+                                                                                </a>
+                                                                                 {{-- <a href="{{ route('cdcs.downloadpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
+                                                                                {{ $outgoing->RegisterID }}
+                                                                                </a> --}}
                                                                             </td>
                                                                             <td>{{ date('d-M-y', strtotime($outgoing->IssuedDate)) }}</td>
                                                                             <td>{{ Str::limit($outgoing->DocFrom, 10) }}</td>

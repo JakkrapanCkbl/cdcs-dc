@@ -53,5 +53,6 @@ Route::prefix('cdcs')->name('cdcs.')->group(function(){
         Route::post('logout',[CdcsController::class,'logout'])->name('logout');
         Route::get('/search', [CdcsController::class, 'search'])->name('search');
         Route::get('/viewpdf/{id}', [CdcsController::class, 'view_pdf'])->name('viewpdf');
+        Route::get('/downloadpdf/{id}', [CdcsController::class, 'download_pdf'])->name('downloadpdf');
     });
 });
