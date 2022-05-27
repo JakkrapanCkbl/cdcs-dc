@@ -145,6 +145,8 @@ class CdcsController extends Controller
                 'id' => $id,
                 'fullpath' => $fullpath 
             ]);
+            // return redirect()->away($fullpath);    
+
         }else{
             return redirect()->back() ->with('alert', 'Confidentail Document! ');
         }
@@ -152,11 +154,8 @@ class CdcsController extends Controller
        
     }
 
-    public function download_pdf($id)
+    public function lineview_pdf($id)
     {
-        // dd($id);
-        //PDF file is stored under project/public/download/info.pdf
-        // $file= public_path(). "/download/info.pdf";
         // dd($id);
         if (($id == null) || ($id == '')) {
             return redirect()->back();
@@ -164,7 +163,6 @@ class CdcsController extends Controller
 
         $docconf = $this->CheckDocConfidentail($id);
         // dd($docconf);
-
         if ($docconf == '1') {
             // dd('aut conf = '.Auth::user()->ViewConfidential);
             // Auth::guard('it')->user()->LoginName
@@ -188,26 +186,75 @@ class CdcsController extends Controller
             // get fn
             $fn = $this->GetFn($id);
             // dd($fn);
-            //  $fullpath = 'storage/cdcs-ppls/docs/00-2022/PLS1-00-IB-BUDG-00001/PLS1-00-IB-BUDG-00001-742266341.pdf';
-            // storage/cdcs-ppls/docs/00-2022/PLS1-00-IB-BUDG-00001/PLS1-00-IB-BUDG-00001-742266341.pdf
-            // storage/cdcs-ppls/docs/01-2022/PLS1-01-IM-CONT-00018/PLS1-01-IM-CONT-00018-30APR22-01.pdf
-            // $fullpath = 'storage/cdcs-ppls/docs/'.$mm_yyyy.'/'.$id.'/'.$fn;
-            // $accesskey = "?sv=2020-08-04&ss=f&srt=sco&sp=rwdlc&se=2027-12-31T11:19:49Z&st=2022-03-16T03:19:49Z&spr=https&sig=BH4be9fKMnR%2BmnTd%2FPwdnJbOMleYYpAS%2BywaTpank60%3D";
             $accesskey = env("AZURE_ACCESS_KEY");
             // dd($accesskey);
             $fullpath = Storage::disk('azure')->url('').'Letters/'.$mm_yyyy.'/'.$id.'/'.$fn.$accesskey;
-            //  dd($fullpath);
-            $headers = array(
-                'Content-Type: application/pdf',
-                );
+            // dd($fullpath);
+            $subject = DB::table('RegisterDoc')->where('RegisterID', $id)->first();
+            // dd($subject);
+            // $subject = htmlspecialchars($subject);
+            // foreach ($subject as $x)
+            // {
+            //     var_dump($x->RegisterID);
+            // }
+            // dd($subject->DocSubject);
+            return view('cdcs.lineviewpdf',[
+                'id' => $id,
+                'fullpath' => $fullpath,
+                'subject' => $subject->DocSubject
+            ]);
 
-            return Response::download($fullpath, 'filename.pdf', $headers);
         }else{
             return redirect()->back() ->with('alert', 'Confidentail Document! ');
         }
         
     }
 
+    public function TestDisk(){
+        // Storage::disk('azure')->download($fullpath,$fn,$headers);
+            
+        $path = 'Letters/'.$mm_yyyy.'/'.$id.'/';
+ 
+        // Get the Larvel disk for Azure
+        $disk = Storage::disk('azure');
+ 
+        // List files in the container path
+        $files = $disk->files($path);
+
+        // Storage::download($files[0]);
+        // dd('done');
+ 
+        // create an array to store the names, sizes and last modified date
+        $list = array();
+ 
+        // Process each filename and get the size and last modified date
+        foreach($files as $file) {
+
+                $x = $disk->download($file,'x.pdf', ['Content-Type: application/pdf']);
+                // dd('done');
+ 
+                $size = $disk->size($file);
+ 
+                $modified = $disk->lastModified($file);
+                $modified = date("Y-m-d H:i:s", $modified);
+ 
+                $filename = "$file";
+ 
+                $item = array(
+                        'name' => $filename,
+                        'size' => $size,
+                        'modified' => $modified,
+                        'x' => $x,
+                );
+ 
+                array_push($list, $item);
+               
+        }
+ 
+        $results = json_encode($list, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+ 
+        return response($results)->header('content-type', 'application/json');
+    }
 
     public function GetMY_Folder($mm) {
         $result = DB::table('ProjectCalendar')
@@ -275,6 +322,13 @@ class CdcsController extends Controller
             dd('nothing x');
         }
         return true;
+    }
+
+    public function downloadFile()
+    {   	
+        // $myFile = public_path("dummy.pdf");
+        $myFile = "https://dccrstorage.file.core.windows.net/docs/Letters/04-2022/DC02-04-IE-PM02-00033/DC02-04-IE-PM02-000332552233879.pdf?sv=2020-08-04&ss=f&srt=sco&sp=rwdlc&se=2027-12-31T11:19:49Z&st=2022-03-16T03:19:49Z&spr=https&sig=BH4be9fKMnR%2BmnTd%2FPwdnJbOMleYYpAS%2BywaTpank60%3D";
+    	return response()->download($myFile);
     }
 
 }

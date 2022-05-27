@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\It\ItController;
 use App\Http\Controllers\Cdcs\CdcsController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,13 +22,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
+// Route::get('/downloadx', function () {
+//     return '<a href="https://dccrstorage.file.core.windows.net/docs/Letters/04-2022/DC02-04-IE-PM02-00033/DC02-04-IE-PM02-000332552233879.pdf?sv=2020-08-04&ss=f&srt=sco&sp=rwdlc&se=2027-12-31T11:19:49Z&st=2022-03-16T03:19:49Z&spr=https&sig=BH4be9fKMnR%2BmnTd%2FPwdnJbOMleYYpAS%2BywaTpank60%3D">link text</a>';
+// });
 // Route::get('/test', [CdcsController::class, 'getdrive']);
 //  Route::get('test', function() {
 //         dd(Storage::disk('azure-file-storage'));
 //         // dd(Storage::disk('azure-file-storage')->listAll());
 //         // dd(Storage::disk('azure-file-storage')->exists('file.txt'));
 //     });
+
+Route::get('/lineviewpdf/{id}', [CdcsController::class, 'lineview_pdf'])->name('lineviewpdf');
 
 Route::prefix('it')->name('it.')->group(function(){
     Route::middleware(['guest:it','PreventBackHistory'])->group(function(){
@@ -53,6 +58,6 @@ Route::prefix('cdcs')->name('cdcs.')->group(function(){
         Route::post('logout',[CdcsController::class,'logout'])->name('logout');
         Route::get('/search', [CdcsController::class, 'search'])->name('search');
         Route::get('/viewpdf/{id}', [CdcsController::class, 'view_pdf'])->name('viewpdf');
-        Route::get('/downloadpdf/{id}', [CdcsController::class, 'download_pdf'])->name('downloadpdf');
+        
     });
 });

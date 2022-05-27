@@ -113,7 +113,7 @@ It allows organizations track correspondence from a variety of resources includi
                 <div class="container">
                     <div class="slide-captions text-start text-light">
                         <!-- Captions -->
-                        <h1>โครงการก่อสร้างรถไฟทางคู่ สายเด่นชัย-เชียงราย-เชียงของ</h1>
+                        <h1>โครงการก่อสร้างทางรถไฟ สายเด่นชัย-เชียงราย-เชียงของ</h1>
                         {{-- <h2>Tao Pun - Rat Burana (Kanchanapisek Road)</h2> --}}
                         <br>
                         {{-- <p class="text-xxl">Tao Pun - Rat Burana (Kanchanapisek Road).</p> --}}

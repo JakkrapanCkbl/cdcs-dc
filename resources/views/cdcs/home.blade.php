@@ -97,7 +97,7 @@
                                                                     @foreach ($incomings as $incoming)
                                                                         <tr>
                                                                             <td>
-                                                                                {{-- <a href="{{ route('cdcs.downloadpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
+                                                                                {{-- <a href="{{ route('cdcs.lineviewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
                                                                                 {{ $incoming->RegisterID }}
                                                                                 </a> --}}
                                                                                 <a href="{{ route('cdcs.viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
