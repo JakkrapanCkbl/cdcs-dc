@@ -97,19 +97,28 @@
                                                                     @foreach ($incomings as $incoming)
                                                                         <tr>
                                                                             <td>
-                                                                                {{-- <a href="{{ route('cdcs.lineviewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
-                                                                                {{ $incoming->RegisterID }}
-                                                                                </a> --}}
-                                                                                <a href="{{ route('cdcs.viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
-                                                                                {{ $incoming->RegisterID }}
-                                                                                </a>
-                                                                                {{-- @if(auth()->user()->ViewConfidential) 
+                                                                                
+                                                                                @if((new \Jenssegers\Agent\Agent())->isDesktop())
+                                                                                    <a href="{{ route('cdcs.viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
+                                                                                        {{ $incoming->RegisterID }}
+                                                                                    </a>
+                                                                                @elseif((new \Jenssegers\Agent\Agent())->isMobile())
+                                                                                    <a href="{{ route('cdcs.mobileviewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
+                                                                                        {{ $incoming->RegisterID }}
+                                                                                    </a>
+                                                                                @elseif((new \Jenssegers\Agent\Agent())->isTablet())
+                                                                                    <a href="{{ route('cdcs.mobileviewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
+                                                                                        {{ $incoming->RegisterID }}
+                                                                                    </a>
+                                                                                @endif
+                                                                                 {{-- @if(auth()->user()->ViewConfidential) 
                                                                                     <a href="{{ route('viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
                                                                                         {{ $incoming->RegisterID }}
                                                                                     </a>
                                                                                 @else
                                                                                     {{ $incoming->RegisterID }}
                                                                                 @endif --}}
+                                                                                 {{-- <a href="{{ $fullpath }}" target="_blank>{{ $incoming->RegisterID }}</a> --}}
                                                                             </td>
                                                                             <td>{{ date('d-M-y', strtotime($incoming->IssuedDate)) }}</td>
                                                                             <td>{{ Str::limit($incoming->DocFrom, 10) }}</td>
@@ -152,15 +161,19 @@
                                                                     @foreach ($outgoings as $outgoing)
                                                                         <tr>
                                                                             <td>
-                                                                                {{-- <a href="{{ route('viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
-                                                                                {{ $outgoing->RegisterID }}
-                                                                                </a> --}}
-                                                                                 <a href="{{ route('cdcs.viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
-                                                                                {{ $outgoing->RegisterID }}
-                                                                                </a>
-                                                                                 {{-- <a href="{{ route('cdcs.downloadpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
-                                                                                {{ $outgoing->RegisterID }}
-                                                                                </a> --}}
+                                                                                @if((new \Jenssegers\Agent\Agent())->isDesktop())
+                                                                                    <a href="{{ route('cdcs.viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
+                                                                                        {{ $outgoing->RegisterID }}
+                                                                                    </a>
+                                                                                @elseif((new \Jenssegers\Agent\Agent())->isMobile())
+                                                                                    <a href="{{ route('cdcs.mobileviewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
+                                                                                        {{ $outgoing->RegisterID }}
+                                                                                    </a>
+                                                                                @elseif((new \Jenssegers\Agent\Agent())->isTablet())
+                                                                                    <a href="{{ route('cdcs.mobileviewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
+                                                                                        {{ $outgoing->RegisterID }}
+                                                                                    </a>
+                                                                                @endif
                                                                             </td>
                                                                             <td>{{ date('d-M-y', strtotime($outgoing->IssuedDate)) }}</td>
                                                                             <td>{{ Str::limit($outgoing->DocFrom, 10) }}</td>

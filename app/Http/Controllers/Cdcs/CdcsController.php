@@ -32,6 +32,9 @@ class CdcsController extends Controller
             ->paginate(20);
         $outgoings->appends($request->all()); //for paginate use
 
+
+        
+
         return view('cdcs.home',['incomings'=>$incomings, 'outgoings'=>$outgoings]);
     }
     
@@ -139,6 +142,7 @@ class CdcsController extends Controller
             $accesskey = env("AZURE_ACCESS_KEY");
             // dd($accesskey);
             $fullpath = Storage::disk('azure')->url('').'Letters/'.$mm_yyyy.'/'.$id.'/'.$fn.$accesskey;
+            
             // dd($fullpath);
             
             return view('cdcs.viewpdf',[
