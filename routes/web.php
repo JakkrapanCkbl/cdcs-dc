@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\It\ItController;
+use App\Http\Controllers\Drawing\DrawingController;
 use App\Http\Controllers\Cdcs\CdcsController;
 
 
@@ -33,6 +34,18 @@ Route::prefix('it')->name('it.')->group(function(){
     Route::middleware(['auth:it','PreventBackHistory'])->group(function(){
         Route::view('/home','it.home')->name('home');
         Route::post('logout',[ItController::class,'logout'])->name('logout');
+    });
+});
+
+Route::prefix('drawing')->name('drawing.')->group(function(){
+    Route::middleware(['guest:drawing','PreventBackHistory'])->group(function(){
+        Route::view('/login','drawing.login')->name('login');
+        Route::post('/check',[DrawingController::class,'check'])->name('check');
+    });
+
+    Route::middleware(['auth:drawing','PreventBackHistory'])->group(function(){
+        Route::view('/home','drawing.home')->name('home');
+        Route::post('logout',[DrawingController::class,'logout'])->name('logout');
     });
 });
 

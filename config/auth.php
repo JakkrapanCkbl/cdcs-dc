@@ -28,6 +28,12 @@ return [
         'model' => App\Models\User::Class,
     ],
 
+    'drawing' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\User::Class,
+    ],
+
+
     
 
     /*
@@ -68,6 +74,11 @@ return [
             'driver' => 'session',
             'provider' => 'cdcss',
         ],
+
+        'drawing' => [
+            'driver' => 'session',
+            'provider' => 'drawings',
+        ],
     ],
 
     /*
@@ -99,6 +110,11 @@ return [
         ],
 
         'cdcss' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+
+        'drawings' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
@@ -138,6 +154,11 @@ return [
         ],
 
         'cdcss' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+
+        'drawings' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],

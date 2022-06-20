@@ -66,7 +66,7 @@
                             </div>
                         
                             <div class="container">
-                                {{-- <div class="tabs">
+                                 <div class="tabs">
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link active" id="incoming-tab" data-bs-toggle="tab" href="#incoming" role="tab" aria-controls="incoming" aria-selected="true">Incoming</a>
@@ -111,6 +111,14 @@
                                                                                         {{ $incoming->RegisterID }}
                                                                                     </a>
                                                                                 @endif
+                                                                                 {{-- @if(auth()->user()->ViewConfidential) 
+                                                                                    <a href="{{ route('viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
+                                                                                        {{ $incoming->RegisterID }}
+                                                                                    </a>
+                                                                                @else
+                                                                                    {{ $incoming->RegisterID }}
+                                                                                @endif --}}
+                                                                                 {{-- <a href="{{ $fullpath }}" target="_blank>{{ $incoming->RegisterID }}</a> --}}
                                                                             </td>
                                                                             <td>{{ date('d-M-y', strtotime($incoming->IssuedDate)) }}</td>
                                                                             <td>{{ Str::limit($incoming->DocFrom, 10) }}</td>
@@ -188,134 +196,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> --}}
-
-                                <div class="bs-example">
-                                    <ul class="nav nav-tabs" id="myTab">
-                                        <li class="nav-item">
-                                            <a href="#sectionA" class="nav-link active" data-toggle="tab">Incoming</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#sectionB" class="nav-link" data-toggle="tab">Outgoing</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div id="sectionA" class="tab-pane fade show active">
-                                            <div style="background: Ivory;">
-                                                <div class="table-responsive text-nowrap">
-                                                    @if(isset($incomings))
-                                                        <table class="table table-bordered nobottommargin">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>RegisterID</th>
-                                                                    <th>IssuedDate</th>
-                                                                    <th>From</th>
-                                                                    <th>To</th>
-                                                                    <th>Subject</th>
-                                                                    <th>Status</th>
-                                                                    <th>Sender Ref</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @if(count($incomings) > 0)
-                                                                    @foreach ($incomings as $incoming)
-                                                                        <tr>
-                                                                            <td>
-                                                                                
-                                                                                @if((new \Jenssegers\Agent\Agent())->isDesktop())
-                                                                                    <a href="{{ route('cdcs.viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
-                                                                                        {{ $incoming->RegisterID }}
-                                                                                    </a>
-                                                                                @elseif((new \Jenssegers\Agent\Agent())->isMobile())
-                                                                                    <a href="{{ route('cdcs.mobileviewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
-                                                                                        {{ $incoming->RegisterID }}
-                                                                                    </a>
-                                                                                @elseif((new \Jenssegers\Agent\Agent())->isTablet())
-                                                                                    <a href="{{ route('cdcs.mobileviewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
-                                                                                        {{ $incoming->RegisterID }}
-                                                                                    </a>
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>{{ date('d-M-y', strtotime($incoming->IssuedDate)) }}</td>
-                                                                            <td>{{ Str::limit($incoming->DocFrom, 10) }}</td>
-                                                                            <td>{{ Str::limit($incoming->DocTo, 20) }}</td>
-                                                                            <td>{{ $incoming->DocSubject }}</td>
-                                                                            <td>{{ $incoming->DocStatus }}</td>
-                                                                            <td>{{ $incoming->CrossRef }}</td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                @else
-                                                                    <tr><td>No result found!</td></tr>
-                                                                @endif
-                                                            </tbody>
-                                                        </table>
-                                                        <div class="pagination-block">
-                                                            {{$incomings->links('layouts.paginationlinks')}}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="sectionB" class="tab-pane fade">
-                                            <div style="background: Azure;">
-                                                <div class="table-responsive text-nowrap">
-                                                    @if(isset($outgoings))
-                                                        <table class="table table-bordered nobottommargin">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>RegisterID</th>
-                                                                    <th>IssuedDate</th>
-                                                                    <th>From</th>
-                                                                    <th>To</th>
-                                                                    <th>Subject</th>
-                                                                    <th>Status</th>
-                                                                    <th>Sender Ref</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @if(count($outgoings) > 0)
-                                                                    @foreach ($outgoings as $outgoing)
-                                                                        <tr>
-                                                                            <td>
-                                                                                @if((new \Jenssegers\Agent\Agent())->isDesktop())
-                                                                                    <a href="{{ route('cdcs.viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
-                                                                                        {{ $outgoing->RegisterID }}
-                                                                                    </a>
-                                                                                @elseif((new \Jenssegers\Agent\Agent())->isMobile())
-                                                                                    <a href="{{ route('cdcs.mobileviewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
-                                                                                        {{ $outgoing->RegisterID }}
-                                                                                    </a>
-                                                                                @elseif((new \Jenssegers\Agent\Agent())->isTablet())
-                                                                                    <a href="{{ route('cdcs.mobileviewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
-                                                                                        {{ $outgoing->RegisterID }}
-                                                                                    </a>
-                                                                                @endif
-                                                                            </td>
-                                                                            <td>{{ date('d-M-y', strtotime($outgoing->IssuedDate)) }}</td>
-                                                                            <td>{{ Str::limit($outgoing->DocFrom, 10) }}</td>
-                                                                            <td>{{ Str::limit($outgoing->DocTo, 20) }}</td>
-                                                                            <td>{{ $outgoing->DocSubject }}</td>
-                                                                            <td>{{ $outgoing->DocStatus }}</td>
-                                                                            <td>{{ $outgoing->ReferTo }}</td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                @else
-                                                                    <tr><td>No result found!</td></tr>
-                                                                @endif
-                                                            </tbody>
-                                                        </table>
-                                                        <div class="pagination-block">
-                                                            {{$outgoings->links('layouts.paginationlinks')}}
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-
-
+                                </div>                                
                             </div>
                         </form>
                     </div>

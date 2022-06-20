@@ -22,18 +22,16 @@ class CdcsController extends Controller
             ->where('RegisterID','not like','%IB%')
             ->orderBy('IssuedDate', 'DESC')
             ->paginate(20);
-        $incomings->appends($request->all());  //for paginate use
-        
+            $incomings->appends($request->all());  //for paginate use
+           
+
         $outgoings  = DB::table('vwShowGridOut')
             ->where('ClassID','=','O')
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%OB%')
             ->orderBy('IssuedDate', 'DESC')
             ->paginate(20);
-        $outgoings->appends($request->all()); //for paginate use
-
-
-        
+            $outgoings->appends($request->all()); //for paginate use
 
         return view('cdcs.home',['incomings'=>$incomings, 'outgoings'=>$outgoings]);
     }
@@ -64,15 +62,15 @@ class CdcsController extends Controller
         // dd($request->get('inputContract') . 'xx' ); 
 
         $ct = $request->get('inputContract'); 
+        $sf = $request->get('inputField');
         $input = $request->get('inputText');
+        
         if ($ct == 'All') {
             $ct = '%';
         }
-        $sf = $request->get('inputField');
         if ($sf=='Subject') {
             $sf = 'DocSubject';
         }
-        
         if(isset($_GET['inputText'])) {
             $search_text = $_GET['inputText'];
             $incomings = DB::table('vwShowGrid')
@@ -195,6 +193,7 @@ class CdcsController extends Controller
             $fullpath = Storage::disk('azure')->url('').'Letters/'.$mm_yyyy.'/'.$id.'/'.$fn.$accesskey;
             // dd($fullpath);
             $subject = DB::table('RegisterDoc')->where('RegisterID', $id)->first();
+            // $contents = DB::table('RegisterDoc')->where('RegisterID', $id)->first();
             // dd($subject);
             // $subject = htmlspecialchars($subject);
             // foreach ($subject as $x)
@@ -205,7 +204,9 @@ class CdcsController extends Controller
             return view('cdcs.lineviewpdf',[
                 'id' => $id,
                 'fullpath' => $fullpath,
-                'subject' => $subject->DocSubject
+                'subject' => $subject->DocSubject,
+                'contents'=> [$subject->CrossRef,$subject->IssuedDate]
+
             ]);
 
         }else{

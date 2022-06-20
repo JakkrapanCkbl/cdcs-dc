@@ -16,6 +16,7 @@
     <!-- Stylesheets & Fonts -->
     <link href="{{ asset('assets/css/plugins.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    
 </head>
 
 <body>
@@ -125,8 +126,7 @@
         @yield('content')
         <!-- end: Page Content -->
         <!-- Footer -->
-        <footer id="footer">
-            
+        <footer id="footer">            
             <div class="copyright-content">
                 <div class="container">
                     <div class="copyright-text text-center">&copy; 2022 CKSTJV - Purple Line Project. All Rights Reserved.<a href="#" target="_blank" rel="noopener"></a> </div>
@@ -150,6 +150,19 @@
         if(exist){
             alert(msg);
         }
+    </script>
+    {{-- for active tab --}}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+                localStorage.setItem('activeTab', $(e.target).attr('href'));
+            });
+            var activeTab = localStorage.getItem('activeTab');
+            if(activeTab){
+                $('#myTab a[href="' + activeTab + '"]').tab('show');
+            }
+        });
     </script>
 </body>
 

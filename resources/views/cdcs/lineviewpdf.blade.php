@@ -29,9 +29,11 @@
                         <!--Modal Box-->
                         <div class="widget text-left border-box p-cb">
                             <h4>{{ $id }}</h4>
+                            <p>{{ $contents[0] }}</p>
+                            <p>วันที่ : {{ date('d-m-Y', strtotime($contents[1])) }}</p>
                             <p>{{ $subject }}</p>
                             <!--Modal trigger button-->
-                            <a href="{{ $fullpath }}" class="btn btn-shadow btn-rounded btn-iconed" type="submit">DOWNLOAD</a>
+                            <a href="{{ $fullpath }}" class="btn btn-shadow btn-rounded btn-iconed" type="submit">View PDF</a>
                             <!--End: Modal trigger button-->
                         </div>
                         <!--End: Modal Box-->
