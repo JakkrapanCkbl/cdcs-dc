@@ -164,6 +164,32 @@
             }
         });
     </script>
+    {{-- for display modal detail --}}
+    <script>
+        $(document).on("click", ".open-ViewTodo", function () {
+        //var regid = $('#todolink').data('todo').regid;
+        //var regid = $('[id^=todolink]').data('todo').regid;
+        //window.alert(regid); 
+        var regid = $(this).data('todo').regid;
+        var crossref = $(this).data('todo').crossref;
+        var subject = $(this).data('todo').subject;
+        var rn = $(this).data('todo').rn;
+        //window.alert(rn);
+        //$(".modal-body #regid").val( "'cdcs.viewpdf', ['id' => " + regid + "]" );
+        document.getElementById("mbdRegID").innerHTML = "<a href='" + rn + "' target='_blank'>" + regid + "</a>";
+        document.getElementById("mbdCrossRef").innerHTML = "Sender Ref : " + crossref;
+        document.getElementById("mbdSubject").innerHTML = "Subject : " + subject;
+        });
+    </script>
+    <script>
+        $(document).on("click", ".open-ViewTodoOut", function () {
+        var regid = $(this).data('todo').regidout;
+        var subject = $(this).data('todo').subjectout;
+        var rn = $(this).data('todo').rnout;
+        document.getElementById("mbdRegID_Out").innerHTML = "<a href='" + rn + "' target='_blank'>" + regid + "</a>";
+        document.getElementById("mbdSubject_Out").innerHTML = "Subject : " + subject;
+        });
+    </script>
 </body>
 
 </html>

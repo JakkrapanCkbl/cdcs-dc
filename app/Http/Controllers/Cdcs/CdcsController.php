@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 class CdcsController extends Controller
-{
-    
+{   
     public function index(Request $request)
     {     
         
@@ -112,7 +111,7 @@ class CdcsController extends Controller
         if ($docconf == '1') {
             // dd('aut conf = '.Auth::user()->ViewConfidential);
             // Auth::guard('it')->user()->LoginName
-            if (Auth::guard('cdcs')-user()->ViewConfidential) {
+            if (Auth::guard('cdcs')->user()->ViewConfidential) {
                 $isopen = '1';
             }else{
                 $isopen = '0';
@@ -168,7 +167,7 @@ class CdcsController extends Controller
         if ($docconf == '1') {
             // dd('aut conf = '.Auth::user()->ViewConfidential);
             // Auth::guard('it')->user()->LoginName
-            if (Auth::guard('cdcs')-user()->ViewConfidential) {
+            if (Auth::guard('cdcs')->user()->ViewConfidential) {
                 $isopen = '1';
             }else{
                 $isopen = '0';

@@ -34,6 +34,8 @@
                             <p>{{ $subject }}</p>
                             <!--Modal trigger button-->
                             <a href="{{ $fullpath }}" class="btn btn-shadow btn-rounded btn-iconed" type="submit">View PDF</a>
+                            {{-- <a href="{{ url()->previous() }}" class="btn btn-shadow btn-rounded btn-iconed" type="submit">Close</a> --}}
+                            <a href="#" class="btn btn-shadow btn-rounded btn-iconed" type="submit" onclick="closeWin()">Close</a>
                             <!--End: Modal trigger button-->
                         </div>
                         <!--End: Modal Box-->
@@ -51,7 +53,11 @@
     <script src="{{ asset('assets/js/plugins.js') }}"></script>
     <!--Template functions-->
     <script src="{{ asset('assets/js/functions.js') }}"></script>
-    
+    <script>
+        function closeWin() {
+            window.close();
+        }
+    </script>
 </body>
 
 </html>
