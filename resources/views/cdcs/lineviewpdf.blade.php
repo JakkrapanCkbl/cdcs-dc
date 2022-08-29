@@ -35,7 +35,7 @@
                             <!--Modal trigger button-->
                             <a href="{{ $fullpath }}" class="btn btn-shadow btn-rounded btn-iconed" type="submit">View PDF</a>
                             {{-- <a href="{{ url()->previous() }}" class="btn btn-shadow btn-rounded btn-iconed" type="submit">Close</a> --}}
-                            <a href="#" class="btn btn-shadow btn-rounded btn-iconed" type="submit" onclick="closeWin()">Close</a>
+                            {{-- <a href="#" class="btn btn-shadow btn-rounded btn-iconed" type="submit" onclick="closeWin()">Close</a> --}}
                             <!--End: Modal trigger button-->
                         </div>
                         <!--End: Modal Box-->

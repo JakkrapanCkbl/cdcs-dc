@@ -20,7 +20,7 @@ class CdcsController extends Controller
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%IB%')
             ->orderBy('IssuedDate', 'DESC')
-            ->paginate(20);
+            ->paginate(10);
             $incomings->appends($request->all());  //for paginate use
            
 
@@ -29,7 +29,7 @@ class CdcsController extends Controller
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%OB%')
             ->orderBy('IssuedDate', 'DESC')
-            ->paginate(20);
+            ->paginate(10);
             $outgoings->appends($request->all()); //for paginate use
 
         return view('cdcs.home',['incomings'=>$incomings, 'outgoings'=>$outgoings]);
@@ -64,6 +64,7 @@ class CdcsController extends Controller
         $sf = $request->get('inputField');
         $input = $request->get('inputText');
         
+        
         if ($ct == 'All') {
             $ct = '%';
         }
@@ -80,7 +81,7 @@ class CdcsController extends Controller
                     $query->where($sf,'like','%'.$search_text.'%');
                 })
                 ->orderBy('IssuedDate', 'DESC')
-                ->paginate(20);
+                ->paginate(10);
                 $incomings->appends($request->all());
             
             $outgoings  = DB::table('vwShowGridOut')
@@ -91,7 +92,7 @@ class CdcsController extends Controller
                     $query->where($sf,'like','%'.$search_text.'%');
                 })
                 ->orderBy('IssuedDate', 'DESC')
-                ->paginate(20);
+                ->paginate(10);
                 $outgoings->appends($request->all());
             
             return view('cdcs.home',['incomings'=>$incomings, 'outgoings'=>$outgoings, 'ct'=>$ct, 'sf'=>$sf, 'inputs'=>$input]);

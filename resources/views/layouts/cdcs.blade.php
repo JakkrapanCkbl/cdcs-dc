@@ -129,7 +129,7 @@
         <footer id="footer">            
             <div class="copyright-content">
                 <div class="container">
-                    <div class="copyright-text text-center">&copy; 2022 CKSTJV - Purple Line Project. All Rights Reserved.<a href="#" target="_blank" rel="noopener"></a> </div>
+                    <div class="copyright-text text-center">&copy; 2022 CKSTJV - DC Project. All Rights Reserved.<a href="#" target="_blank" rel="noopener"></a> </div>
                 </div>
             </div>
         </footer>
@@ -173,12 +173,32 @@
         var regid = $(this).data('todo').regid;
         var crossref = $(this).data('todo').crossref;
         var subject = $(this).data('todo').subject;
+        var issueddate = $(this).data('todo').issueddate;
+        var docstatus = $(this).data('todo').docstatus;
+        var docfrom = $(this).data('todo').docfrom;
+        var docto = $(this).data('todo').docto;
+        var responsetodocument = $(this).data('todo').responsetodocument;
+        var referto = $(this).data('todo').referto;
+        var csc_response = $(this).data('todo').csc_response;
+        var showresponsed = $(this).data('todo').showresponsed;
+        var showdoccode = $(this).data('todo').showdoccode;
+        var showtransmittalno = $(this).data('todo').showtransmittalno;
         var rn = $(this).data('todo').rn;
         //window.alert(rn);
         //$(".modal-body #regid").val( "'cdcs.viewpdf', ['id' => " + regid + "]" );
         document.getElementById("mbdRegID").innerHTML = "<a href='" + rn + "' target='_blank'>" + regid + "</a>";
         document.getElementById("mbdCrossRef").innerHTML = "Sender Ref : " + crossref;
         document.getElementById("mbdSubject").innerHTML = "Subject : " + subject;
+        document.getElementById("mbdIssuedDate").innerHTML = "Issued Date : " + issueddate;
+        document.getElementById("mbdDocStatus").innerHTML = "Status : " + docstatus;
+        document.getElementById("mbdDocFrom").innerHTML = "From : " + docfrom;
+        document.getElementById("mbdDocTo").innerHTML = "To : " + docto;
+        document.getElementById("mbdResponseToDocument").innerHTML =  responsetodocument;
+        document.getElementById("mbdReferTo").innerHTML = referto;
+        document.getElementById("mbdCSC_Response").innerHTML = "Consult Response : " + csc_response;
+        document.getElementById("mbdShowResponsed").innerHTML = showresponsed;
+        document.getElementById("mbdShowDocCode").innerHTML = "Document code : Document name : " + showdoccode;
+        document.getElementById("mbdShowTransmittalNo").innerHTML = "Transmittal no : " + showtransmittalno;
         });
     </script>
     <script>

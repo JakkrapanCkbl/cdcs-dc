@@ -94,6 +94,14 @@
                                                                     <th>Subject</th>
                                                                     <th>Status</th>
                                                                     <th>Sender Ref</th>
+                                                                    <th>Respond to</th>
+                                                                    <th>Refer to</th>
+                                                                    <th>Consult Response</th>
+                                                                    <th>Responded by</th>
+                                                                    <th>Document code : Document name</th>
+                                                                    <th>Transmittal no</th>
+                                                                    
+
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -107,6 +115,16 @@
                                                                                     "regid":"{{ $incoming->RegisterID }}",
                                                                                     "crossref":"{{ $incoming->CrossRef }}",
                                                                                     "subject":"{{ $incoming->DocSubject }}",
+                                                                                    "issueddate":"{{ date('d-M-y', strtotime($incoming->IssuedDate)) }}",
+                                                                                    "docstatus":"{{ $incoming->DocStatus }}",
+                                                                                    "docfrom":"{{ $incoming->DocFrom }}",
+                                                                                    "docto":"{{ $incoming->DocTo }}",
+                                                                                    "responsetodocument":"{{ $incoming->ResponseToDocument }}",
+                                                                                    "referto":"{{ $incoming->ReferTo }}",
+                                                                                    "csc_response":"{{ $incoming->CSC_Response }}",
+                                                                                    "showresponsed":"{{ $incoming->ShowResponsed }}",
+                                                                                    "showdoccode":"{{ $incoming->ShowDocCode }}",
+                                                                                    "showtransmittalno":"{{ $incoming->ShowTransmittalNo }}",
                                                                                     "rn":"{{ $url = route('cdcs.viewpdf', ['id' => $incoming->RegisterID]); }}"
                                                                                     }'
                                                                                 href="#">...</a>
@@ -133,6 +151,12 @@
                                                                             <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $incoming->DocSubject }}">{{ $incoming->DocSubject }}</p></td>
                                                                             <td><p>{{ $incoming->DocStatus }}</p></td>
                                                                             <td><p>{{ $incoming->CrossRef }}</p></td>
+                                                                            <td><p>{{ $incoming->ResponseToDocument }}</p></td>
+                                                                            <td><p>{{ $incoming->ReferTo }}</p></td>
+                                                                            <td><p>{{ $incoming->CSC_Response }}</p></td>
+                                                                            <td><p>{{ $incoming->ShowResponsed }}</p></td>
+                                                                            <td><p>{{ $incoming->ShowDocCode }}</p></td>
+                                                                            <td><p>{{ $incoming->ShowTransmittalNo }}</p></td>
                                                                         </tr>
                                                                     @endforeach
                                                                 @else
@@ -175,6 +199,7 @@
                                                                                 data-todo='{
                                                                                     "regidout":"{{ $outgoing->RegisterID }}",
                                                                                     "subjectout":"{{ $outgoing->DocSubject }}",
+                                                                                    "issueddate":"{{ $incoming->IssuedDate }}",
                                                                                     "rnout":"{{ $url = route('cdcs.viewpdf', ['id' => $outgoing->RegisterID]); }}"
                                                                                     }'
                                                                                 href="#">...</a>
@@ -237,7 +262,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 id="modal-label-3" class="modal-title"><p id="mbdRegID" style="font-size: 20px;"></p></h4>
+                    <h4 id="modal-label-3" class="modal-title"><p id="mbdRegID" style="font-size: 20px;text-decoration: underline;"></p></h4>
                     <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button">×</button>
                 </div>
                 <div class="modal-body">
@@ -248,6 +273,38 @@
                             <p id="mbdSubject"></p>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6"><p id="mbdIssuedDate"></p></div>
+                        <div class="col-md-6"><p id="mbdDocStatus"></p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p id="mbdDocFrom"></p>
+                            <p id="mbdDocTo"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2"><p>Respond to : </p></div>
+                        <div class="col-md-10"><p id="mbdResponseToDocument" style="color:blue;text-decoration: underline;"></p></div>
+                        <div class="col-md-2"><p>Refer to : </p></div>
+                        <div class="col-md-10"><p id="mbdReferTo" style="color:blue;text-decoration: underline;"></p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p id="mbdCSC_Response"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"><p>Responded by : </p></div>
+                        <div class="col-md-9"><p id="mbdShowResponsed" style="color:blue;text-decoration: underline;"></p></div>
+                    </div>
+                     <div class="row">
+                        <div class="col-md-12">
+                            <p id="mbdShowDocCode"></p>
+                            <p id="mbdShowTransmittalNo"></p>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button data-bs-dismiss="modal" class="btn btn-b" type="button">Close</button>
@@ -256,6 +313,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="modal fade" id="modal-2" tabindex="-1" role="modal" aria-labelledby="modal-label-2" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
