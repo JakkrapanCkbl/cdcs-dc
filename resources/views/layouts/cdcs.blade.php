@@ -178,6 +178,7 @@
         var docfrom = $(this).data('todo').docfrom;
         var docto = $(this).data('todo').docto;
         var responsetodocument = $(this).data('todo').responsetodocument;
+        var link_responsetodocument = $(this).data('todo').link_responsetodocument;
         var referto = $(this).data('todo').referto;
         var csc_response = $(this).data('todo').csc_response;
         var showresponsed = $(this).data('todo').showresponsed;
@@ -193,7 +194,9 @@
         document.getElementById("mbdDocStatus").innerHTML = "Status : " + docstatus;
         document.getElementById("mbdDocFrom").innerHTML = "From : " + docfrom;
         document.getElementById("mbdDocTo").innerHTML = "To : " + docto;
-        document.getElementById("mbdResponseToDocument").innerHTML =  responsetodocument;
+        //document.getElementById("mbdResponseToDocument").innerHTML = "<a href='https://www.quackit.com/javascript/examples/sample_popup.cfm' onclick='basicPopup(this.href);return false'>" + responsetodocument + "</a>";
+        //document.getElementById("mbdLink_ResponseToDocument").innerHTML = "<a href='" + link_responsetodocument + "' onclick='basicPopup(this.href);return false'>" + responsetodocument + "</a>";    
+        document.getElementById("mbdLink_ResponseToDocument").innerHTML = "<a href='" + link_responsetodocument + "' onclick='basicPopup(this.href);return false'>" + responsetodocument + "</a>";
         document.getElementById("mbdReferTo").innerHTML = referto;
         document.getElementById("mbdCSC_Response").innerHTML = "Consult Response : " + csc_response;
         document.getElementById("mbdShowResponsed").innerHTML = showresponsed;
@@ -210,6 +213,12 @@
         document.getElementById("mbdSubject_Out").innerHTML = "Subject : " + subject;
         });
     </script>
+    <script>
+        function basicPopup(url) {
+            popupWindow = window.open(url,'popUpWindow','height=300,width=400,left=500,top=200,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+	    }
+    </script>
+   
 </body>
 
 </html>

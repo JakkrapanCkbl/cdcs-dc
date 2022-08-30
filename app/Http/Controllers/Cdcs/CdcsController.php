@@ -99,6 +99,41 @@ class CdcsController extends Controller
         }
     }
 
+    public function view_pdf_list($id){
+        // dd(unserialize($id));
+        $myString = unserialize($id);
+        $myArray = explode(',', $myString);
+        // dd($myArray);
+        $count = count($myArray);
+        // dd($count);
+        if ($count > 1) {
+            echo "<div style='
+            background-color: lightgrey;
+            max-width: 500px;
+            margin: auto;
+            background: LightGray;
+            padding: 10px;
+            '>";
+            echo "Respond to :<br>";
+            foreach($myArray as $x => $val) {
+                //echo "$x = $val<br>";
+                //echo "$val<br>";
+                // dd($val);
+                //return $this->view_pdf($val);
+                //return redirect()->route('cdcs.viewpdf', ['id' => $val]);
+                // route('cdcs.viewpdf', ['id' => $val]);
+                // <a href="{{ route('cdcs.viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">{{ $incoming->RegisterID }}</a>
+                // echo route('cdcs.viewpdf', ['id' => $val]);
+                // echo "<h4>Respond to : </h4>";
+                echo "<a href='" . route('cdcs.viewpdf', ['id' => trim($val)]) ."' target='_blank'>" . trim($val) . "</a><br>";
+            }
+            echo "</div>";
+        }else{
+            return $this->view_pdf($myArray[0]);
+        }
+    }
+
+
     public function view_pdf($id)
     {
         // dd($id);

@@ -120,6 +120,7 @@
                                                                                     "docfrom":"{{ $incoming->DocFrom }}",
                                                                                     "docto":"{{ $incoming->DocTo }}",
                                                                                     "responsetodocument":"{{ $incoming->ResponseToDocument }}",
+                                                                                    "link_responsetodocument":"{{ $url = route('cdcs.viewpdflist', ['id' => serialize($incoming->ResponseToDocument)]); }}",
                                                                                     "referto":"{{ $incoming->ReferTo }}",
                                                                                     "csc_response":"{{ $incoming->CSC_Response }}",
                                                                                     "showresponsed":"{{ $incoming->ShowResponsed }}",
@@ -284,8 +285,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-2"><p>Respond to : </p></div>
-                        <div class="col-md-10"><p id="mbdResponseToDocument" style="color:blue;text-decoration: underline;"></p></div>
+                        {{-- <div class="col-md-2"><p>Respond to : </p></div>
+                        <div class="col-md-10"><p id="mbdResponseToDocument"></p></div> --}}
+                         <div class="col-md-2"><p>Respond to : </p></div>
+                        <div class="col-md-10"><p id="mbdLink_ResponseToDocument" style="color:blue;text-decoration: underline;"></p></div>
                         <div class="col-md-2"><p>Refer to : </p></div>
                         <div class="col-md-10"><p id="mbdReferTo" style="color:blue;text-decoration: underline;"></p></div>
                     </div>

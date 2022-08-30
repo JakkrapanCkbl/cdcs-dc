@@ -62,6 +62,9 @@ Route::prefix('cdcs')->name('cdcs.')->group(function(){
         Route::get('/search', [CdcsController::class, 'search'])->name('search');
         Route::get('/viewpdf/{id}', [CdcsController::class, 'view_pdf'])->name('viewpdf');
         Route::get('/mobileviewpdf/{id}', [CdcsController::class, 'lineview_pdf'])->name('mobileviewpdf');
+
+        Route::get('/viewpdflist/{id}', [CdcsController::class, 'view_pdf_list'])->name('viewpdflist');
+
     });
 });
 
