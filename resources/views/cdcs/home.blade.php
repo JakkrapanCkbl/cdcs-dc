@@ -122,8 +122,10 @@
                                                                                     "responsetodocument":"{{ $incoming->ResponseToDocument }}",
                                                                                     "link_responsetodocument":"{{ $url = route('cdcs.viewpdflist', ['id' => serialize($incoming->ResponseToDocument)]); }}",
                                                                                     "referto":"{{ $incoming->ReferTo }}",
+                                                                                    "link_referto":"{{ $url = route('cdcs.viewpdflist', ['id' => serialize($incoming->ReferTo)]); }}",
                                                                                     "csc_response":"{{ $incoming->CSC_Response }}",
                                                                                     "showresponsed":"{{ $incoming->ShowResponsed }}",
+                                                                                    "link_showresponsed":"{{ $url = route('cdcs.viewpdflist', ['id' => serialize($incoming->ShowResponsed)]); }}",
                                                                                     "showdoccode":"{{ $incoming->ShowDocCode }}",
                                                                                     "showtransmittalno":"{{ $incoming->ShowTransmittalNo }}",
                                                                                     "rn":"{{ $url = route('cdcs.viewpdf', ['id' => $incoming->RegisterID]); }}"
@@ -165,9 +167,9 @@
                                                                 @endif
                                                             </tbody>
                                                         </table>
-                                                        <div class="pagination-block">
+                                                        {{-- <div class="pagination-block">
                                                             {{$incomings->links('layouts.paginationlinks')}}
-                                                        </div>
+                                                        </div> --}}
                                                     @endif
                                                 </div>
                                             </div>
@@ -234,9 +236,9 @@
                                                                 @endif
                                                             </tbody>
                                                         </table>
-                                                        <div class="pagination-block">
+                                                        {{-- <div class="pagination-block">
                                                             {{$outgoings->links('layouts.paginationlinks')}}
-                                                        </div>
+                                                        </div> --}}
                                                     @endif
                                                 </div>
                                             </div>
@@ -289,8 +291,10 @@
                         <div class="col-md-10"><p id="mbdResponseToDocument"></p></div> --}}
                          <div class="col-md-2"><p>Respond to : </p></div>
                         <div class="col-md-10"><p id="mbdLink_ResponseToDocument" style="color:blue;text-decoration: underline;"></p></div>
+                        {{-- <div class="col-md-2"><p>Refer to : </p></div>
+                        <div class="col-md-10"><p id="mbdReferTo" style="color:blue;text-decoration: underline;"></p></div> --}}
                         <div class="col-md-2"><p>Refer to : </p></div>
-                        <div class="col-md-10"><p id="mbdReferTo" style="color:blue;text-decoration: underline;"></p></div>
+                        <div class="col-md-10"><p id="mbdLink_ReferTo" style="color:blue;text-decoration: underline;"></p></div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -298,8 +302,10 @@
                         </div>
                     </div>
                     <div class="row">
+                        {{-- <div class="col-md-3"><p>Responded by : </p></div>
+                        <div class="col-md-9"><p id="mbdShowResponsed" style="color:blue;text-decoration: underline;"></p></div> --}}
                         <div class="col-md-3"><p>Responded by : </p></div>
-                        <div class="col-md-9"><p id="mbdShowResponsed" style="color:blue;text-decoration: underline;"></p></div>
+                        <div class="col-md-9"><p id="mbdLink_ShowResponsed" style="color:blue;text-decoration: underline;"></p></div>
                     </div>
                      <div class="row">
                         <div class="col-md-12">

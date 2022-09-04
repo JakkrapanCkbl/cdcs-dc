@@ -20,8 +20,12 @@ class CdcsController extends Controller
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%IB%')
             ->orderBy('IssuedDate', 'DESC')
-            ->paginate(10);
-            $incomings->appends($request->all());  //for paginate use
+            ->limit(50)
+            ->get();
+            // for use paginate-----
+            // ->paginate(50);
+            // $incomings->appends($request->all());  //for paginate use
+            //must remark code  <div class="pagination-block"> in view.blade
            
 
         $outgoings  = DB::table('vwShowGridOut')
@@ -29,8 +33,12 @@ class CdcsController extends Controller
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%OB%')
             ->orderBy('IssuedDate', 'DESC')
-            ->paginate(10);
-            $outgoings->appends($request->all()); //for paginate use
+            ->limit(50)
+            ->get();
+            //for use paginate----------
+            // ->paginate(50);
+            // $outgoings->appends($request->all()); //for paginate use
+            //must remark code  <div class="pagination-block"> in view.blade
 
         return view('cdcs.home',['incomings'=>$incomings, 'outgoings'=>$outgoings]);
     }
@@ -136,7 +144,7 @@ class CdcsController extends Controller
 
     public function view_pdf($id)
     {
-        // dd($id);
+        //dd($id);
         if (($id == null) || ($id == '')) {
             return redirect()->back();
         }
@@ -158,7 +166,17 @@ class CdcsController extends Controller
         // dd('is open = '.$isopen);
 
         if ($isopen == '1') {
-            // substr("LS1-00-IB-BUDG-00001", 0, 2);
+            // substr("DC02-00-OE-PM02-00002", 0, 2);
+            //check is registerid or sender_ref
+            if ($this->CheckIsRegId($id) == '1'){
+                $id = $id;
+            }else{
+                //dd('is sender_ref');
+                $id = $this->MyFind("ReferToDoc",
+                "RegisterID", 
+                "WHERE ReferTo = '" . $id . "' AND substring(RegisterID,9,1) = 'O'", 
+                "ORDER BY RegisterID");
+            }
             $mm = substr($id, 5, 2);
             // dd($mm);
             // get MM-YYYY
@@ -191,9 +209,35 @@ class CdcsController extends Controller
        
     }
 
+    public function CheckIsRegId($id) {
+        //DC02-00-OE-PM02-00002
+        $set1 = substr($id, 4, 1);
+        $set2 = substr($id, 7, 1);
+        $set3 = substr($id, 10, 1);
+        $set4 = substr($id, 15, 1);
+
+        if(($set1 == '-') && ($set2 == '-') && ($set3 == '-') && ($set4 == '-')) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    public function MyFind($TableName, $FieldOut, $StrFilter, $OrderBy) {
+        $strsql = "SELECT " . $FieldOut . " FROM " . $TableName;
+        if($StrFilter != ''){
+            $strsql = $strsql . " " . $StrFilter;
+        }
+        if($OrderBy != ''){
+            $strsql = $strsql . " " . $OrderBy;
+        }
+        $result = DB::select($strsql);
+        return $result[0]->$FieldOut;
+    }
+
     public function lineview_pdf($id)
     {
-        // dd($id);
+        //dd($id);
         if (($id == null) || ($id == '')) {
             return redirect()->back();
         }

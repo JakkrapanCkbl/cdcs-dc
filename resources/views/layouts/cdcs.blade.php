@@ -23,7 +23,8 @@
     <!-- Body Inner -->
     <div class="body-inner">
         <!-- Header -->
-        <header id="header" data-fullwidth="true">
+        <header id="header" class="header-disable-fixed">
+        {{-- <header id="header" data-fullwidth="true"> --}}
         {{-- <header id="header" class="header-always-fixed"> --}}
             <div class="header-inner">
                 <div class="container">
@@ -180,8 +181,10 @@
         var responsetodocument = $(this).data('todo').responsetodocument;
         var link_responsetodocument = $(this).data('todo').link_responsetodocument;
         var referto = $(this).data('todo').referto;
+        var link_referto = $(this).data('todo').link_referto;
         var csc_response = $(this).data('todo').csc_response;
         var showresponsed = $(this).data('todo').showresponsed;
+        var link_showresponsed = $(this).data('todo').link_showresponsed;
         var showdoccode = $(this).data('todo').showdoccode;
         var showtransmittalno = $(this).data('todo').showtransmittalno;
         var rn = $(this).data('todo').rn;
@@ -194,12 +197,13 @@
         document.getElementById("mbdDocStatus").innerHTML = "Status : " + docstatus;
         document.getElementById("mbdDocFrom").innerHTML = "From : " + docfrom;
         document.getElementById("mbdDocTo").innerHTML = "To : " + docto;
-        //document.getElementById("mbdResponseToDocument").innerHTML = "<a href='https://www.quackit.com/javascript/examples/sample_popup.cfm' onclick='basicPopup(this.href);return false'>" + responsetodocument + "</a>";
-        //document.getElementById("mbdLink_ResponseToDocument").innerHTML = "<a href='" + link_responsetodocument + "' onclick='basicPopup(this.href);return false'>" + responsetodocument + "</a>";    
+        //document.getElementById("ResponseToDocument").innerHTML = responsetodocument;
         document.getElementById("mbdLink_ResponseToDocument").innerHTML = "<a href='" + link_responsetodocument + "' onclick='basicPopup(this.href);return false'>" + responsetodocument + "</a>";
-        document.getElementById("mbdReferTo").innerHTML = referto;
+        //document.getElementById("mbdReferTo").innerHTML = referto;
+        document.getElementById("mbdLink_ReferTo").innerHTML = "<a href='" + link_referto + "' onclick='basicPopup(this.href);return false'>" + referto + "</a>";
         document.getElementById("mbdCSC_Response").innerHTML = "Consult Response : " + csc_response;
         document.getElementById("mbdShowResponsed").innerHTML = showresponsed;
+        document.getElementById("mbdLink_ShowResponsed").innerHTML = "<a href='" + link_showresponsed + "' onclick='basicPopup(this.href);return false'>" + showresponsed + "</a>";
         document.getElementById("mbdShowDocCode").innerHTML = "Document code : Document name : " + showdoccode;
         document.getElementById("mbdShowTransmittalNo").innerHTML = "Transmittal no : " + showtransmittalno;
         });
