@@ -29,7 +29,7 @@
             <div class="header-inner">
                 <div class="container">
                     <!--Logo-->
-                    <div id="logo"> <a href="index.html"><span class="logo-default">CDCS-PLJV</span><span class="logo-dark">POLO</span></a> </div>
+                    <div id="logo"> <a href="{{ URL('/') }}"><span class="logo-default">CKSTJV-DC</span><span class="logo-dark">POLO</span></a> </div>
                     <!--End: Logo-->
                     <!-- Search -->
                     {{-- <div id="search"><a id="btn-search-close" class="btn-search-close" aria-label="Close search form"><i class="icon-x"></i></a>
@@ -138,7 +138,7 @@
     </div>
     <!-- end: Body Inner -->
     <!-- Scroll top -->
-    <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+    {{-- <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a> --}}
     <!--Plugins-->
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/plugins.js') }}"></script>
@@ -217,11 +217,11 @@
         document.getElementById("mbdSubject_Out").innerHTML = "Subject : " + subject;
         });
     </script>
-    <script>
+    {{-- <script>
         function basicPopup(url) {
             popupWindow = window.open(url,'popUpWindow','height=300,width=400,left=500,top=200,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 	    }
-    </script>
+    </script> --}}
    
 </body>
 

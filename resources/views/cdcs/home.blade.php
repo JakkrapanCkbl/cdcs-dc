@@ -55,11 +55,10 @@
                             <div class="col-md-6">
                                 <label for="inputText" class="form-label">Input</label>
                                 @if(isset($inputs))
-                                    <input type="text" class="form-control" name="inputText" id="inputText" value="{{$inputs}}">
+                                    <input type="text" class="form-control" name="inputText" id="inputText" autocorrect="off" autocapitalize="none" value="{{$inputs}}">                       
                                 @else
-                                    <input type="text" class="form-control" name="inputText" id="inputText">
-                                @endif
-                                                               
+                                    <input type="text" class="form-control" name="inputText" id="inputText" autocorrect="off" autocapitalize="none">
+                                @endif                      
                             </div>
                            
                             <div class="col-md-2">
@@ -105,7 +104,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @if(count($incomings) > 0)
+                                                                @if(count($incomings) > 1)
                                                                     @foreach ($incomings as $incoming)
                                                                         <tr>
                                                                             <td>
@@ -193,7 +192,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @if(count($outgoings) > 0)
+                                                                @if(count($outgoings) > 1)
                                                                     @foreach ($outgoings as $outgoing)
                                                                         <tr>
                                                                             <td>
@@ -202,7 +201,7 @@
                                                                                 data-todo='{
                                                                                     "regidout":"{{ $outgoing->RegisterID }}",
                                                                                     "subjectout":"{{ $outgoing->DocSubject }}",
-                                                                                    "issueddate":"{{ $incoming->IssuedDate }}",
+                                                                                    "issueddate":"{{ $outgoing->IssuedDate }}",
                                                                                     "rnout":"{{ $url = route('cdcs.viewpdf', ['id' => $outgoing->RegisterID]); }}"
                                                                                     }'
                                                                                 href="#">...</a>

@@ -26,7 +26,9 @@ class CdcsController extends Controller
             // ->paginate(50);
             // $incomings->appends($request->all());  //for paginate use
             //must remark code  <div class="pagination-block"> in view.blade
-           
+            // if ( is_null($incomings) ) {
+            //     App::abort(404);
+            //   }   
 
         $outgoings  = DB::table('vwShowGridOut')
             ->where('ClassID','=','O')
@@ -39,6 +41,9 @@ class CdcsController extends Controller
             // ->paginate(50);
             // $outgoings->appends($request->all()); //for paginate use
             //must remark code  <div class="pagination-block"> in view.blade
+            // if ( is_null($outgoings) ) {
+            //     App::abort(404);
+            //   }   
 
         return view('cdcs.home',['incomings'=>$incomings, 'outgoings'=>$outgoings]);
     }
