@@ -6,3 +6,12 @@
  <link href="css/custom.css" rel="stylesheet">
 
 */
+/* ----------------------------------------------------------------
+    horizontal scrollbar on top and bottom of table
+-----------------------------------------------------------------*/
+.wrapper1, .wrapper2{width: 1120px; border: none 0px RED;overflow-x: scroll; overflow-y:hidden;}
+.wrapper1{height: 20px; }
+.wrapper2{height: 600px; }
+.div1 {width:5000px; height: 20px; }
+.div2 {width:5000px; height: 600px; background-color: #88FF88;overflow: auto;}
+

@@ -20,7 +20,7 @@ class CdcsController extends Controller
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%IB%')
             ->orderBy('IssuedDate', 'DESC')
-            ->limit(50)
+            ->limit(25)
             ->get();
             // for use paginate-----
             // ->paginate(50);
@@ -35,7 +35,7 @@ class CdcsController extends Controller
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%OB%')
             ->orderBy('IssuedDate', 'DESC')
-            ->limit(50)
+            ->limit(25)
             ->get();
             //for use paginate----------
             // ->paginate(50);
@@ -76,7 +76,7 @@ class CdcsController extends Controller
         $ct = $request->get('inputContract'); 
         $sf = $request->get('inputField');
         $input = $request->get('inputText');
-        
+        // dd($ct.$sf.$input);
         
         if ($ct == 'All') {
             $ct = '%';
@@ -91,11 +91,14 @@ class CdcsController extends Controller
                 ->where('RegisterID','not like','%IB%')
                 ->where('ShowContract', 'like','%'.$ct.'%')
                 ->where(function($query) use ($sf, $search_text){
-                    $query->where($sf,'like','%'.$search_text.'%');
+                    $query->where($sf,'like','%'. $search_text .'%');
                 })
                 ->orderBy('IssuedDate', 'DESC')
-                ->paginate(10);
-                $incomings->appends($request->all());
+                ->get();
+            
+
+                // ->paginate(10);
+                // $incomings->appends($request->all());
             
             $outgoings  = DB::table('vwShowGridOut')
                 ->where('ClassID','=','O')
@@ -105,8 +108,19 @@ class CdcsController extends Controller
                     $query->where($sf,'like','%'.$search_text.'%');
                 })
                 ->orderBy('IssuedDate', 'DESC')
-                ->paginate(10);
-                $outgoings->appends($request->all());
+                ->get();
+
+            // $strsql = "SELECT * FROM vwShowGridOut ";
+            // $strsql = $strsql . "WHERE ClassID = 'O' ";
+            // $strsql = $strsql . "AND ShowContract = '" . $ct . "' ";
+            // $strsql = $strsql . "AND " . $sf . " LIKE '%" . $search_text . "%' ";
+            // $strsql = "select * FROM vwShowGridOut WHERE RegisterID like '%DC02-04-OO-PM02-00055%' ";
+            // $outgoings = DB::select($strsql);
+            // dd($outgoings);
+
+
+                // ->paginate(10);
+                // $outgoings->appends($request->all());
             
             return view('cdcs.home',['incomings'=>$incomings, 'outgoings'=>$outgoings, 'ct'=>$ct, 'sf'=>$sf, 'inputs'=>$input]);
         }
@@ -177,10 +191,21 @@ class CdcsController extends Controller
                 $id = $id;
             }else{
                 //dd('is sender_ref');
+                //case INCOMING referto  (and outgoing is registerid = DC03-02-OE-PM03-00032
+                $keep_id = $id;
                 $id = $this->MyFind("ReferToDoc",
                 "RegisterID", 
                 "WHERE ReferTo = '" . $id . "' AND substring(RegisterID,9,1) = 'O'", 
                 "ORDER BY RegisterID");
+
+                if ($id ==  null) {
+                    // case OUTGOING responde to
+                    $id = $this->MyFind("RegisterDoc",
+                    "RegisterID", 
+                    "WHERE CrossRef = '" . $keep_id . "' ", 
+                    "ORDER BY RegisterID");
+                }
+                //  dd($id);
             }
             $mm = substr($id, 5, 2);
             // dd($mm);
@@ -237,7 +262,13 @@ class CdcsController extends Controller
             $strsql = $strsql . " " . $OrderBy;
         }
         $result = DB::select($strsql);
-        return $result[0]->$FieldOut;
+        
+        if ($result == null) {
+            // dd("null");
+            return null;
+        }else {
+            return $result[0]->$FieldOut;
+        }
     }
 
     public function lineview_pdf($id)

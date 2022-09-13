@@ -16,7 +16,7 @@
     <!-- Stylesheets & Fonts -->
     <link href="{{ asset('assets/css/plugins.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-    
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -197,26 +197,63 @@
         document.getElementById("mbdDocStatus").innerHTML = "Status : " + docstatus;
         document.getElementById("mbdDocFrom").innerHTML = "From : " + docfrom;
         document.getElementById("mbdDocTo").innerHTML = "To : " + docto;
-        //document.getElementById("ResponseToDocument").innerHTML = responsetodocument;
-        document.getElementById("mbdLink_ResponseToDocument").innerHTML = "<a href='" + link_responsetodocument + "' onclick='basicPopup(this.href);return false'>" + responsetodocument + "</a>";
-        //document.getElementById("mbdReferTo").innerHTML = referto;
+        document.getElementById("mbdLink_ResponseToDocument").innerHTML = "<a href='" + link_responsetodocument + "' onclick='basicPopup(this.href);return false'>" + responsetodocument + "</a>";      
         document.getElementById("mbdLink_ReferTo").innerHTML = "<a href='" + link_referto + "' onclick='basicPopup(this.href);return false'>" + referto + "</a>";
         document.getElementById("mbdCSC_Response").innerHTML = "Consult Response : " + csc_response;
-        document.getElementById("mbdShowResponsed").innerHTML = showresponsed;
         document.getElementById("mbdLink_ShowResponsed").innerHTML = "<a href='" + link_showresponsed + "' onclick='basicPopup(this.href);return false'>" + showresponsed + "</a>";
         document.getElementById("mbdShowDocCode").innerHTML = "Document code : Document name : " + showdoccode;
         document.getElementById("mbdShowTransmittalNo").innerHTML = "Transmittal no : " + showtransmittalno;
         });
     </script>
+
     <script>
         $(document).on("click", ".open-ViewTodoOut", function () {
+        //var regid = $('[id^=todolink]').data('todo').regid;
         var regid = $(this).data('todo').regidout;
         var subject = $(this).data('todo').subjectout;
+        var issueddate = $(this).data('todo').issueddate;
+        var docstatus = $(this).data('todo').docstatus;
+        var docfrom = $(this).data('todo').docfrom;
+        var docto = $(this).data('todo').docto;
+        var referto = $(this).data('todo').referto;
+        var link_referto = $(this).data('todo').link_referto;
+        var responsetodocument = $(this).data('todo').responsetodocument;
+        var link_responsetodocument = $(this).data('todo').link_responsetodocument;
+        var showresponsed = $(this).data('todo').showresponsed;
+        var link_showresponsed = $(this).data('todo').link_showresponsed;
+        var showdoccode = $(this).data('todo').showdoccode;
+        var showtransmittalno = $(this).data('todo').showtransmittalno;
         var rn = $(this).data('todo').rnout;
+
         document.getElementById("mbdRegID_Out").innerHTML = "<a href='" + rn + "' target='_blank'>" + regid + "</a>";
         document.getElementById("mbdSubject_Out").innerHTML = "Subject : " + subject;
+        document.getElementById("mbdIssuedDate_Out").innerHTML = "Issued Date : " + issueddate;
+        document.getElementById("mbdDocStatus_Out").innerHTML = "Status : " + docstatus;
+        document.getElementById("mbdDocFrom_Out").innerHTML = "From : " + docfrom;
+        document.getElementById("mbdDocTo_Out").innerHTML = "To : " + docto;
+        document.getElementById("mbdLink_ReferTo_Out").innerHTML = "<a href='" + link_referto + "' onclick='basicPopup(this.href);return false'>" + referto + "</a>";
+        document.getElementById("mbdLink_ResponseToDocument_Out").innerHTML = "<a href='" + link_responsetodocument + "' onclick='basicPopup(this.href);return false'>" + responsetodocument + "</a>";
+        document.getElementById("mbdLink_ShowResponsed_Out").innerHTML = "<a href='" + link_showresponsed + "' onclick='basicPopup(this.href);return false'>" + showresponsed + "</a>";
+        document.getElementById("mbdShowDocCode_Out").innerHTML = "Document code : Document name : " + showdoccode;
+        document.getElementById("mbdShowTransmittalNo_Out").innerHTML = "Transmittal no : " + showtransmittalno;
+
+
         });
     </script>
+
+    <script>
+        $(function(){
+            $(".wrapper1").scroll(function(){
+                $(".wrapper2")
+                    .scrollLeft($(".wrapper1").scrollLeft());
+            });
+            $(".wrapper2").scroll(function(){
+                $(".wrapper1")
+                    .scrollLeft($(".wrapper2").scrollLeft());
+            });
+        });
+    </script>
+
     {{-- <script>
         function basicPopup(url) {
             popupWindow = window.open(url,'popUpWindow','height=300,width=400,left=500,top=200,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');

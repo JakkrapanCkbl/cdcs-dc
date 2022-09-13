@@ -79,7 +79,7 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div id="sectionA" class="tab-pane fade show active">
-                                            <div style="background: Ivory;">
+                                             <div style="background: Ivory;">
                                                 <div class="table-responsive text-nowrap">
                                                     @if(isset($incomings))
                                                         <table class="table table-bordered nobottommargin">
@@ -99,12 +99,14 @@
                                                                     <th>Responded by</th>
                                                                     <th>Document code : Document name</th>
                                                                     <th>Transmittal no</th>
-                                                                    
-
+                                                                    <th>Inform to</th>
+                                                                    <th>Remark</th>
+                                                                    <th>Doc Register</th>
+                                                                    <th>Doc Category</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @if(count($incomings) > 1)
+                                                                @if(count($incomings) >= 1)
                                                                     @foreach ($incomings as $incoming)
                                                                         <tr>
                                                                             <td>
@@ -129,7 +131,7 @@
                                                                                     "showtransmittalno":"{{ $incoming->ShowTransmittalNo }}",
                                                                                     "rn":"{{ $url = route('cdcs.viewpdf', ['id' => $incoming->RegisterID]); }}"
                                                                                     }'
-                                                                                href="#">...</a>
+                                                                                href="#"><i class="icon-eye"></i></a>
                                                                                 
                                                                             </td>
                                                                             <td>
@@ -148,8 +150,8 @@
                                                                                 @endif
                                                                             </td>
                                                                             <td><p>{{ date('d-M-y', strtotime($incoming->IssuedDate)) }}</p></td>
-                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $incoming->DocFrom }}">{{ Str::limit($incoming->DocFrom, 10) }}</p></td>
-                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $incoming->DocTo }}">{{ Str::limit($incoming->DocTo, 20) }}</p></td>
+                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="From : {{ $incoming->DocFrom }}">{{ Str::limit($incoming->DocFrom, 10) }}</p></td>
+                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="To : {{ $incoming->DocTo }}">{{ Str::limit($incoming->DocTo, 20) }}</p></td>
                                                                             <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $incoming->DocSubject }}">{{ $incoming->DocSubject }}</p></td>
                                                                             <td><p>{{ $incoming->DocStatus }}</p></td>
                                                                             <td><p>{{ $incoming->CrossRef }}</p></td>
@@ -157,8 +159,12 @@
                                                                             <td><p>{{ $incoming->ReferTo }}</p></td>
                                                                             <td><p>{{ $incoming->CSC_Response }}</p></td>
                                                                             <td><p>{{ $incoming->ShowResponsed }}</p></td>
-                                                                            <td><p>{{ $incoming->ShowDocCode }}</p></td>
+                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="doc code : code name > {{ $incoming->ShowDocCode }}">{{ Str::limit($incoming->ShowDocCode, 100) }}</p></td>
                                                                             <td><p>{{ $incoming->ShowTransmittalNo }}</p></td>
+                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Inform to : {{ $incoming->InformTo }}">{{ Str::limit($incoming->InformTo, 20) }}</p></td>
+                                                                            <td><p>{{ $incoming->Remark }}</p></td>
+                                                                            <td><p>{{ date('d-M-y', strtotime($incoming->RegDate)) }}</p></td>
+                                                                            <td><p>{{ $incoming->ShowDocCat }}</p></td>
                                                                         </tr>
                                                                     @endforeach
                                                                 @else
@@ -188,11 +194,19 @@
                                                                     <th>To</th>
                                                                     <th>Subject</th>
                                                                     <th>Status</th>
-                                                                    <th>Sender Ref</th>
+                                                                    <th>Refer to</th>
+                                                                    <th>Responde to</th>
+                                                                    <th>Responded by</th>
+                                                                    <th>Document code : Document name</th>
+                                                                    <th>Transmittal no</th>
+                                                                    <th>Inform to</th>
+                                                                    <th>Remark</th>
+                                                                    <th>Doc Register</th>
+                                                                    <th>Doc Category</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @if(count($outgoings) > 1)
+                                                                @if(count($outgoings) >= 1)
                                                                     @foreach ($outgoings as $outgoing)
                                                                         <tr>
                                                                             <td>
@@ -201,10 +215,21 @@
                                                                                 data-todo='{
                                                                                     "regidout":"{{ $outgoing->RegisterID }}",
                                                                                     "subjectout":"{{ $outgoing->DocSubject }}",
-                                                                                    "issueddate":"{{ $outgoing->IssuedDate }}",
+                                                                                    "issueddate":"{{ date('d-M-y', strtotime($outgoing->IssuedDate)) }}",
+                                                                                    "docstatus":"{{ $outgoing->DocStatus }}",
+                                                                                    "docfrom":"{{ $outgoing->DocFrom }}",
+                                                                                    "docto":"{{ $outgoing->DocTo }}",
+                                                                                    "referto":"{{ $outgoing->ReferTo }}",
+                                                                                    "link_referto":"{{ $url = route('cdcs.viewpdflist', ['id' => serialize($outgoing->ReferTo)]); }}",
+                                                                                    "responsetodocument":"{{ $outgoing->ResponseToDocument }}",
+                                                                                    "link_responsetodocument":"{{ $url = route('cdcs.viewpdflist', ['id' => serialize($outgoing->ResponseToDocument)]); }}",
+                                                                                    "showresponsed":"{{ $outgoing->ShowResponsed }}",
+                                                                                    "link_showresponsed":"{{ $url = route('cdcs.viewpdflist', ['id' => serialize($outgoing->ShowResponsed)]); }}",
+                                                                                    "showdoccode":"{{ $outgoing->ShowDocCode }}",
+                                                                                    "showtransmittalno":"{{ $outgoing->ShowTransmittalNo }}",
                                                                                     "rnout":"{{ $url = route('cdcs.viewpdf', ['id' => $outgoing->RegisterID]); }}"
                                                                                     }'
-                                                                                href="#">...</a>
+                                                                                href="#"><i class="icon-eye"></i></a>
                                                                                 
                                                                             </td>
                                                                             <td>
@@ -223,11 +248,19 @@
                                                                                 @endif
                                                                             </td>
                                                                             <td><p>{{ date('d-M-y', strtotime($outgoing->IssuedDate)) }}</p></td>
-                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $outgoing->DocFrom }}">{{ Str::limit($outgoing->DocFrom, 10) }}</p></td>
-                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $outgoing->DocTo }}">{{ Str::limit($outgoing->DocTo, 20) }}</p></td>
+                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="From : {{ $outgoing->DocFrom }}">{{ Str::limit($outgoing->DocFrom, 10) }}</p></td>
+                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="To : {{ $outgoing->DocTo }}">{{ Str::limit($outgoing->DocTo, 20) }}</p></td>
                                                                             <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $outgoing->DocSubject }}">{{ $outgoing->DocSubject }}</p></td>
                                                                             <td><p>{{ $outgoing->DocStatus }}</p></td>
                                                                             <td><p>{{ $outgoing->ReferTo }}</p></td>
+                                                                            <td><p>{{ $outgoing->ResponseToDocument }}</p></td>
+                                                                            <td><p>{{ $outgoing->ShowResponsed }}</p></td>
+                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="doc code : code name > {{ $outgoing->ShowDocCode }}">{{ Str::limit($outgoing->ShowDocCode, 100) }}</p></td>
+                                                                            <td><p>{{ $outgoing->ShowTransmittalNo }}</p></td>
+                                                                            <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Inform to : {{ $outgoing->InformTo }}">{{ Str::limit($outgoing->InformTo, 20) }}</p></td>
+                                                                            <td><p>{{ $outgoing->Remark }}</p></td>
+                                                                            <td><p>{{ date('d-M-y', strtotime($outgoing->RegDate)) }}</p></td>
+                                                                            <td><p>{{ $outgoing->ShowDocCat }}</p></td>
                                                                         </tr>
                                                                     @endforeach
                                                                 @else
@@ -301,8 +334,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        {{-- <div class="col-md-3"><p>Responded by : </p></div>
-                        <div class="col-md-9"><p id="mbdShowResponsed" style="color:blue;text-decoration: underline;"></p></div> --}}
                         <div class="col-md-3"><p>Responded by : </p></div>
                         <div class="col-md-9"><p id="mbdLink_ShowResponsed" style="color:blue;text-decoration: underline;"></p></div>
                     </div>
@@ -327,16 +358,43 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 id="modal-label-2" class="modal-title"><p id="mbdRegID_Out" style="font-size: 20px;"></p></h4>
+                    <h4 id="modal-label-2" class="modal-title"><p id="mbdRegID_Out" style="font-size: 20px;text-decoration: underline;"></p></h4>
+                    <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button">×</button>
                     {{-- <button aria-hidden="true" data-bs-dismiss="modal" class="btn-close" type="button">×</button> --}}
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            {{-- <input type="text" name="regid" id="regid" value="" class="form-control" style="width: 230px;"> --}}                                                      
                             <p id="mbdSubject_Out"></p>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6"><p id="mbdIssuedDate_Out"></p></div>
+                        <div class="col-md-6"><p id="mbdDocStatus_Out"></p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6"><p id="mbdDocFrom_Out"></p></div>
+                        <div class="col-md-6"><p id="mbdDocTo_Out"></p></div>
+                    </div>
+                   
+                    <div class="row">
+                        <div class="col-md-2"><p>Refer to : </p></div>
+                        <div class="col-md-10"><p id="mbdLink_ReferTo_Out" style="color:blue;text-decoration: underline;"></p></div>
+                        <div class="col-md-2"><p>Respond to : </p></div>
+                        <div class="col-md-10"><p id="mbdLink_ResponseToDocument_Out" style="color:blue;text-decoration: underline;"></p></div>                          
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"><p>Responded by : </p></div>
+                        <div class="col-md-9"><p id="mbdLink_ShowResponsed_Out" style="color:blue;text-decoration: underline;"></p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p id="mbdShowDocCode_Out"></p>
+                            <p id="mbdShowTransmittalNo_Out"></p>
+                        </div>
+                    </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button data-bs-dismiss="modal" class="btn btn-b" type="button">Close</button>
