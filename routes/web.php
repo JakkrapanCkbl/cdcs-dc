@@ -44,7 +44,8 @@ Route::prefix('drawing')->name('drawing.')->group(function(){
     });
 
     Route::middleware(['auth:drawing','PreventBackHistory'])->group(function(){
-        Route::view('/home','drawing.home')->name('home');
+        //Route::view('/home','drawing.home')->name('home');
+        Route::get('/home', [DrawingController::class, 'index'])->name('home');
         Route::post('logout',[DrawingController::class,'logout'])->name('logout');
     });
 });

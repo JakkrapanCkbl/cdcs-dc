@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     <section id="page-content">
             <div class="container">
                 <div class="row">
