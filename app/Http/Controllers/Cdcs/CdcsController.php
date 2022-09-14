@@ -77,16 +77,58 @@ class CdcsController extends Controller
         $sf = $request->get('inputField');
         $input = $request->get('inputText');
         // dd($ct.$sf.$input);
-        
         if ($ct == 'All') {
             $ct = '%';
         }
-        if ($sf=='Subject') {
+        if ($sf=='Subject (use a , to separate)') {
             $sf = 'DocSubject';
         }
+        // dd($sf);
         if(isset($_GET['inputText'])) {
             $search_text = $_GET['inputText'];
-            $incomings = DB::table('vwShowGrid')
+            //case Subject
+            if ($sf == 'DocSubject') {
+                $myArray = explode(',', $search_text);
+                //dd($myArray);
+                $numItems = count($myArray);
+                //dd($numItems);
+                $strsql = "SELECT * FROM vwShowGridOut ";
+                $strsql = $strsql . "WHERE ClassID = 'I' ";
+                $strsql = $strsql . "AND ShowContract = '" . $ct . "' ";
+                foreach ($myArray as $key => $value) {
+                    // echo "key = " . $key . ", value = " . $value . "\n";
+                    if($key == 0) {
+                        $strsql = $strsql . "AND (DocSubject LIKE '%" . trim($value) . "%' ";
+                    }elseif($key == ($numItems - 1)) {
+                        $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%') ";
+                    }
+                    else{
+                        $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%' ";
+                    }
+                }
+                $strsql = $strsql . "ORDER BY IssuedDate DESC ";
+                // echo $strsql;
+                $incomings = DB::select($strsql);
+                //------------------------------------------------------------------------------------
+                $myArray = explode(',', $search_text);
+                $numItems = count($myArray);
+                $strsql = "SELECT * FROM vwShowGridOut ";
+                $strsql = $strsql . "WHERE ClassID = 'O' ";
+                $strsql = $strsql . "AND ShowContract = '" . $ct . "' ";
+                foreach ($myArray as $key => $value) {
+                    if($key == 0) {
+                        $strsql = $strsql . "AND (DocSubject LIKE '%" . trim($value) . "%' ";
+                    }elseif($key == ($numItems - 1)) {
+                        $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%') ";
+                    }
+                    else{
+                        $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%' ";
+                    }
+                }
+                $strsql = $strsql . "ORDER BY IssuedDate DESC ";
+                $outgoings = DB::select($strsql);
+            }else{ //case simple
+                $incomings = DB::table('vwShowGrid')
                 ->where('ClassID','=','I')
                 ->where('RegisterID','not like','%IB%')
                 ->where('ShowContract', 'like','%'.$ct.'%')
@@ -95,33 +137,22 @@ class CdcsController extends Controller
                 })
                 ->orderBy('IssuedDate', 'DESC')
                 ->get();
-            
-
                 // ->paginate(10);
                 // $incomings->appends($request->all());
-            
-            $outgoings  = DB::table('vwShowGridOut')
-                ->where('ClassID','=','O')
-                ->where('RegisterID','not like','%OB%')
-                ->where('ShowContract', 'like','%'.$ct.'%')
-                ->where(function($query) use ($sf, $search_text){
-                    $query->where($sf,'like','%'.$search_text.'%');
-                })
-                ->orderBy('IssuedDate', 'DESC')
-                ->get();
-
-            // $strsql = "SELECT * FROM vwShowGridOut ";
-            // $strsql = $strsql . "WHERE ClassID = 'O' ";
-            // $strsql = $strsql . "AND ShowContract = '" . $ct . "' ";
-            // $strsql = $strsql . "AND " . $sf . " LIKE '%" . $search_text . "%' ";
-            // $strsql = "select * FROM vwShowGridOut WHERE RegisterID like '%DC02-04-OO-PM02-00055%' ";
-            // $outgoings = DB::select($strsql);
-            // dd($outgoings);
-
-
-                // ->paginate(10);
-                // $outgoings->appends($request->all());
-            
+                //--------------------------------------------------------------------
+                $outgoings  = DB::table('vwShowGridOut')
+                    ->where('ClassID','=','O')
+                    ->where('RegisterID','not like','%OB%')
+                    ->where('ShowContract', 'like','%'.$ct.'%')
+                    ->where(function($query) use ($sf, $search_text){
+                        $query->where($sf,'like','%'.$search_text.'%');
+                    })
+                    ->orderBy('IssuedDate', 'DESC')
+                    ->get();
+                    // ->paginate(10);
+                    // $outgoings->appends($request->all());
+            }
+         
             return view('cdcs.home',['incomings'=>$incomings, 'outgoings'=>$outgoings, 'ct'=>$ct, 'sf'=>$sf, 'inputs'=>$input]);
         }
     }

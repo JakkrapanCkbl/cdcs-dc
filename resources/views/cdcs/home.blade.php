@@ -41,14 +41,14 @@
                                     @if(isset($sf))
                                         @if($sf == 'RegisterID')
                                             <option selected>RegisterID</option>
-                                            <option>Subject</option>
+                                            <option>Subject (use a , to separate)</option>
                                         @elseif($sf == 'DocSubject')
                                             <option>RegisterID</option>
-                                            <option selected>Subject</option>
+                                            <option selected>Subject (use a , to separate)</option>
                                         @endif
                                     @else
                                         <option selected>RegisterID</option>
-                                        <option>Subject</option>
+                                        <option>Subject (use a , to separate)</option>
                                     @endif
                                 </select>
                             </div>
