@@ -575,118 +575,12 @@ var INSPIRO = {},
                 });
             }
 
-            //Sidebar menu
-            var $sidebarMenu = $(".sidebar-menu");
-            $sidebarMenu
-                .find(".sidebar-dropdown")
-                .prepend('<span class="dropdown-arrow"></span>');
-            $sidebarMenu
-                .find('.sidebar-dropdown > a[href="#"]')
-                .attr("href", "javascript:;");
-            $('.sidebar-dropdown > a[href="javascript:;"], .sidebar-dropdown > .dropdown-arrow').on("click", function(e) {
-                if ($(this).parent(".sidebar-dropdown").hasClass("active")) {
-                    $(this).parent(".sidebar-dropdown").find(".sidebar-submenu").slideUp(200);
-                    $(this).parent().removeClass("active");
-                } else {
-                    $(this).parent().removeClass("active");
-                    $(this)
-                        .parent(".sidebar-dropdown")
-                        .find(".sidebar-submenu")
-                        .slideDown(200);
-                    $(this).parent().addClass("active");
-                }
-            });
 
 
-            ///////////////// fixed menu on scroll for desktop
-
-            var navbarFixedTop = $(".navbar-fixed-top");
-
-            if (navbarFixedTop.length > 0) {
-                var navbarFixedTopOffsetTop = navbarFixedTop.offset().top;
-                if ($(window).width() > 992) {
-                    $(window).scroll(function() {
-                        if ($(this).scrollTop() > navbarFixedTopOffsetTop) {
-                            $(".navbar-fixed-top").addClass("fixed-top");
-                            // add padding top to show content behind navbar
-                            $("body").css(
-                                "padding-top",
-                                $(".navbar-fixed-top").outerHeight() + "px"
-                            );
-                        } else {
-                            $(".navbar-fixed-top").removeClass("fixed-top");
-                            // remove padding top from body
-                            $("body").css("padding-top", "0");
-                        }
-                    });
-                } // end if
-            }
-
-            // Prevent closing from click inside dropdown
-            $(document).on("click", ".dropdown-menu", function(e) {
-                e.stopPropagation();
-            });
-
-            //chkd this - $(window).on('resize',function(){location.reload();});
-            // refresh window on resize
-            $(window).on("resize", function() {
-                location.reload();
-            });
-
-            if ($(window).width() < 992) {
-                $(".dropdown a, .dropdown-menu a").click(function(e) {
-                    e.preventDefault();
-                    if ($(this).next(".dropdown-menu").length) {
-                        $(this).next(".dropdown-menu").slideToggle();
-                    }
-                    $(".dropdown").on("hide.bs.dropdown", function() {
-                        $(this).find(".dropdown-menu").hide();
-                    });
-                });
-            }
-
-
-
-
-
-
-
-            // offcanvas onmobile
-            $("[data-trigger]").on("click", function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                var offcanvas_id = $(this).attr("data-trigger");
-                $(offcanvas_id).toggleClass("show");
-                $("body").toggleClass("offcanvas-active");
-                $(".screen-overlay").toggleClass("show");
-            });
-
-            // Close menu when pressing ESC
-            $(document).on("keydown", function(event) {
-                if (event.keyCode === 27) {
-                    $(".mobile-offcanvas").removeClass("show");
-                    $("body").removeClass("overlay-active");
-                }
-            });
-
-            $(".btn-close, .screen-overlay").click(function(e) {
-                $(".screen-overlay").removeClass("show");
-                $(".mobile-offcanvas").removeClass("show");
-                $("body").removeClass("offcanvas-active");
-            });
+            
         },
         mainMenuResponsiveShow: function() {
-            $(window).breakpoints("lessThan", "lg", function() {
-                if ($(".resposnsive-show").length > 0) {
-                    $(".resposnsive-show").addClass("show");
-                }
-            });
-
-            $(window).breakpoints("greaterEqualTo", "lg", function() {
-                if ($(".resposnsive-show").length > 0) {
-                    $(".resposnsive-show").removeClass("show");
-                }
-            });
+           
         },
         mainMenuOverlay: function() {},
         pageMenu: function() {
@@ -767,7 +661,8 @@ var INSPIRO = {},
                 $dotsMenuItems.on("click", function() {
                     $dotsMenuItems.parent("li").removeClass("current");
                     $(this).parent("li").addClass("current");
-                    return false;
+                     $("html, body").stop(true, false).animate({ scrollTop: $($(this).attr("href")).offset().top}, elem.options.speed, "easeInOutExpo");
+                return false;
                 });
                 $dotsMenuItems.parents("li").removeClass("current");
                 $dotsMenu
@@ -1320,6 +1215,7 @@ var INSPIRO = {},
                                     "margin-right":
                                         -elem.options.margin / setResponsiveColumns + "px",
                                 });
+                                elem.flickity('resize');
                                 elem.flickity("reposition");
                             }, 300);
                         });
@@ -1652,7 +1548,8 @@ var INSPIRO = {},
                     var elem = $(this);
                     //Plugin Options
                     elem.options = {
-                        animation: elem.attr("data-animation") || "animate__fadeIn",
+                        animate_prefix: "animate__",
+                        animation: elem.attr("data-animate") || "fadeIn",
                         separator: elem.attr("data-separator") || ",",
                         speed: elem.attr("data-speed") || 2000,
                         height: elem.height(),
@@ -1662,7 +1559,7 @@ var INSPIRO = {},
                     });
                     //Initializing Morphext plugin and passing the options
                     elem.Morphext({
-                        animation: elem.options.animation,
+                        animation: elem.options.animate_prefix + elem.options.animation,
                         separator: elem.options.separator,
                         speed: Number(elem.options.speed),
                     });
@@ -1759,10 +1656,10 @@ var INSPIRO = {},
                     elem.addClass("animate__animated");
                     //Plugin Options
                     elem.options = {
-                        animation: elem.attr("data-animate") || "animate__fadeIn",
+                        animate_prefix: "animate__",
+                        animation: elem.attr("data-animate") || "fadeIn",
                         delay: elem.attr("data-animate-delay") || 200,
-                        direction: ~elem.attr("data-animate").indexOf("Out") ?
-                            "back" : "forward",
+                        direction: ~elem.attr("data-animate").indexOf("Out") ? "back" : "forward",
                         offsetX: elem.attr("data-animate-offsetX") || 0,
                         offsetY: elem.attr("data-animate-offsetY") || -100,
                     };
@@ -1772,7 +1669,7 @@ var INSPIRO = {},
                             element: elem,
                             handler: function() {
                                 var t = setTimeout(function() {
-                                    elem.addClass(elem.options.animation + " visible");
+                                    elem.addClass(elem.options.animate_prefix + elem.options.animation + " visible");
                                 }, elem.options.delay);
                                 this.destroy();
                             },
@@ -1781,16 +1678,16 @@ var INSPIRO = {},
                     } else {
                         elem.addClass("visible");
                         elem.on("click", function() {
-                            elem.addClass(elem.options.animation);
+                            elem.addClass(elem.options.animate_prefix + elem.options.animation);
                             return false;
                         });
                     }
                     //Demo play
                     if (elem.parents(".demo-play-animations").length) {
                         elem.on("click", function() {
-                            elem.removeClass(elem.options.animation);
+                            elem.removeClass(elem.options.animate_prefix + elem.options.animation);
                             var t = setTimeout(function() {
-                                elem.addClass(elem.options.animation);
+                                elem.addClass(elem.options.animate_prefix + elem.options.animation);
                             }, 50);
                             return false;
                         });
@@ -3040,8 +2937,8 @@ var INSPIRO = {},
         ) {
             var $element,
                 $elementContainer,
-                $animateEnter = $animateEnter || "animate__fadeInDown",
-                $animateExit = $animateExit || "animate__fadeOutDown",
+                $animateEnter = "animate__" + $animateEnter || "animate__fadeInDown",
+                $animateExit = "animate__" + $animateExit || "animate__fadeOutDown",
                 $placement,
                 $backgroundImage,
                 $backgroundImageContainer,

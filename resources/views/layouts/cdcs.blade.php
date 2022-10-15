@@ -13,6 +13,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Document title -->
     <title>CKSTJV | CDCS-DC</title>
+    <!-- DataTables css -->
+    <link href={{ asset('assets/plugins/datatables/datatables.min.css') }} rel='stylesheet' />
     <!-- Stylesheets & Fonts -->
     <link href="{{ asset('assets/css/plugins.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
@@ -138,10 +140,13 @@
     </div>
     <!-- end: Body Inner -->
     <!-- Scroll top -->
-    {{-- <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a> --}}
+    <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
     <!--Plugins-->
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/plugins.js') }}"></script>
+    <!--Datatables plugin files-->
+    <script src="{{ asset('assets/plugins/datatables/datatables.min.js') }}"></script>
+    
     <!--Template functions-->
     <script src="{{ asset('assets/js/functions.js') }}"></script>
     {{-- custum functions --}}
@@ -259,6 +264,61 @@
             popupWindow = window.open(url,'popUpWindow','height=300,width=400,left=500,top=200,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
 	    }
     </script> --}}
+
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable({
+                dom: "Bfrtip",
+                buttons: ["excel"],
+                oLanguage: {"sSearch": "Incomming Filter"},
+                scrollX: true,
+                scrollY: '50vh',
+                scrollCollapse: true,
+                paging: false,
+                columnDefs: [
+                    { width: 10, targets: 0 },
+                    { width: 180, targets: 1 },
+                    { targets: [3], visible: false, searchable: false },
+                    { targets: [4], visible: false, searchable: false },
+                    { width: 600, targets: 5 },
+                    { width: 650, targets: 12 },
+                    { width: 100, targets: 13 },
+                    { width: 100, targets: 14 },
+                ],
+                fixedColumns: true,
+
+            });
+        } );
+
+        $(document).ready(function() {
+            $('#table2').DataTable({
+                dom: "Bfrtip",
+                buttons: ["excel"],
+                oLanguage: {"sSearch": "Outgoing Filter"},
+                scrollX: true,
+                scrollY: '50vh',
+                scrollCollapse: true,
+                paging: false,
+                columnDefs: [
+                    { width: 10, targets: 0 },
+                    { width: 180, targets: 1 },
+                    { targets: [3], visible: false, searchable: false },
+                    { targets: [4], visible: false, searchable: false },
+                    { width: 550, targets: 5 },
+                    { width: 200, targets: 7 },
+                    { width: 200, targets: 8 },
+                    { width: 200, targets: 9 },
+                    { width: 650, targets: 10 },
+                    { width: 200, targets: 11 },
+                    { width: 100, targets: 12 },
+                    { width: 100, targets: 13 },
+                ],
+                fixedColumns: true,
+               
+
+            });
+        } );
+    </script>
    
 </body>
 

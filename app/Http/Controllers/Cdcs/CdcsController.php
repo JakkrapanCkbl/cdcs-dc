@@ -92,41 +92,46 @@ class CdcsController extends Controller
                 //dd($myArray);
                 $numItems = count($myArray);
                 //dd($numItems);
-                $strsql = "SELECT * FROM vwShowGridOut ";
+                $strsql = "SELECT * FROM vwShowGrid ";
                 $strsql = $strsql . "WHERE ClassID = 'I' ";
-                $strsql = $strsql . "AND ShowContract = '" . $ct . "' ";
-                foreach ($myArray as $key => $value) {
-                    // echo "key = " . $key . ", value = " . $value . "\n";
-                    if($key == 0) {
-                        $strsql = $strsql . "AND (DocSubject LIKE '%" . trim($value) . "%' ";
-                    }elseif($key == ($numItems - 1)) {
-                        $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%') ";
-                    }
-                    else{
-                        $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%' ";
+                $strsql = $strsql . "AND ShowContract like '%" . $ct . "%' ";
+                if ($numItems > 1) {
+                    foreach ($myArray as $key => $value) {
+                        // echo "key = " . $key . ", value = " . $value . "\n";
+                        if($key == 0) {
+                            $strsql = $strsql . "AND (DocSubject LIKE '%" . trim($value) . "%' ";
+                        }elseif($key == ($numItems - 1)) {
+                            $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%') ";
+                        }
+                        else{
+                            $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%' ";
+                        }
                     }
                 }
                 $strsql = $strsql . "ORDER BY IssuedDate DESC ";
                 // echo $strsql;
                 $incomings = DB::select($strsql);
                 //------------------------------------------------------------------------------------
-                $myArray = explode(',', $search_text);
-                $numItems = count($myArray);
+                // $myArray = explode(',', $search_text);
+                // $numItems = count($myArray);
                 $strsql = "SELECT * FROM vwShowGridOut ";
                 $strsql = $strsql . "WHERE ClassID = 'O' ";
-                $strsql = $strsql . "AND ShowContract = '" . $ct . "' ";
-                foreach ($myArray as $key => $value) {
-                    if($key == 0) {
-                        $strsql = $strsql . "AND (DocSubject LIKE '%" . trim($value) . "%' ";
-                    }elseif($key == ($numItems - 1)) {
-                        $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%') ";
-                    }
-                    else{
-                        $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%' ";
+                $strsql = $strsql . "AND ShowContract like '%" . $ct . "%' ";
+                if ($numItems > 1) {
+                    foreach ($myArray as $key => $value) {
+                        if($key == 0) {
+                            $strsql = $strsql . "AND (DocSubject LIKE '%" . trim($value) . "%' ";
+                        }elseif($key == ($numItems - 1)) {
+                            $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%') ";
+                        }
+                        else{
+                            $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%' ";
+                        }
                     }
                 }
                 $strsql = $strsql . "ORDER BY IssuedDate DESC ";
                 $outgoings = DB::select($strsql);
+                
             }else{ //case simple
                 $incomings = DB::table('vwShowGrid')
                 ->where('ClassID','=','I')
