@@ -46,5 +46,99 @@ class DrawingController extends Controller
         return view('drawing.home',['drawings'=>$drawings, 'options'=>'1']);
     }
 
+    public function MyFind($TableName, $FieldOut, $StrFilter, $OrderBy) {
+        $strsql = "SELECT " . $FieldOut . " FROM " . $TableName;
+        if($StrFilter != ''){
+            $strsql = $strsql . " " . $StrFilter;
+        }
+        if($OrderBy != ''){
+            $strsql = $strsql . " " . $OrderBy;
+        }
+        $result = DB::select($strsql);
+        
+        if ($result == null) {
+            // dd("null");
+            return null;
+        }else {
+            return $result[0]->$FieldOut;
+        }
+    }
+
+    public function dwg_list(Request $request)
+    {     
+        
+        $strsql = "SELECT * FROM vwDwgReg_List_Step2_Short ";
+        $strsql = $strsql . "WHERE (ShowContract like 'DC2') ";
+        $strsql = $strsql . "AND (Revision = 'A') ";
+        $strsql = $strsql . "AND (DwgCancel = 0) ";
+        $drawings = DB::select($strsql);
+
+        return view('drawing.home',['drawings'=>$drawings]);
+    }
+
+    public function view_cad($id)
+    {
+        
+        //id = W-DC2-BULD-B010-AR-2001-001-A
+        //dd($id);
+        if (($id == null) || ($id == '')) {
+            return redirect()->back();
+        } else {
+            $fn = $id . '.pdf';
+            //dd($fn);
+            //explode : W-DC2-BULD-B010-AR-2001-001-A
+            $pieces = explode("-", $id);
+            //dd($pieces[3]);
+            $accesskey = env("AZURE_ACCESS_KEY");
+            // dd($accesskey);
+            // $fullpath = 'docs/Drawings/AR/PDF/W-DC2-BULD-B010-AR-2001-001-A.pdf';
+            // $fullpath = Storage::disk('azure')->url('').'Drawings/'.$pieces[4].'/PDF/'.$fn.$accesskey;
+            // dd($fullpath);
+            // return view('cdcs.viewpdf',[
+            //     'id' => $id,
+            //     'fullpath' => $fullpath 
+            // ]);
+
+            $checkopenpdf = $this->CheckOpenPdf($id);
+            //dd($checkopenpdf);
+            if ($checkopenpdf == 2 ) {
+                $fullpath = Storage::disk('azure')->url('').'Drawings/'.$pieces[4].'/PDF/FromConsult/'.$fn.$accesskey;
+            }elseif ($checkopenpdf == 1 ) {
+                $fullpath = Storage::disk('azure')->url('').'Drawings/'.$pieces[4].'/PDF/'.$fn.$accesskey;
+            }else{
+                return redirect()->back() ->with('alert', 'Pdf is nothing');
+            }
+            //dd($fullpath);
+            return view('cdcs.viewpdf',[
+                'id' => $id,
+                'fullpath' => $fullpath 
+            ]);
+        }
+    }
+
+    public function CheckOpenPdf($id) {
+        //id = W-DC2-BULD-B010-AR-2001-001-A
+        $pieces = explode("-", $id);
+        //dd(substr($id,2,25));
+        //result = 2 is CscEndorsed, 1 is DesignerEndorsed, 0 is Designer Review
+        $csc = $this->MyFind("Drawing_Register",
+        "ChkCSC_Endorsed", 
+        "WHERE Status = '" . $pieces[0] . "' AND Dwg_no = '" . substr($id,2,25) . "' AND Revision = '" . $pieces[7] . "' ",
+        "ORDER BY Dwg_no");
+        $dsg = $this->MyFind("Drawing_Register",
+        "ChkAecom_Endorsed", 
+        "WHERE Status = '" . $pieces[0] . "' AND Dwg_no = '" . substr($id,2,25) . "' AND Revision = '" . $pieces[7] . "' ",
+        "ORDER BY Dwg_no");
+        
+        if ($csc == 1) {
+            $result = 2;
+        }elseif ($csc == 0 && $dsg == 1) {
+            $result = 1;
+        }else{
+            $result = 0;
+        }
+        return $result;
+    }
+
 
 }

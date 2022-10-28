@@ -121,9 +121,23 @@
                                                         
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('cdcs.viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
+                                                        {{-- <a href="{{ route('cdcs.viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
                                                             {{ $incoming->RegisterID }}
-                                                        </a>
+                                                        </a> --}}
+                                                         @if((new \Jenssegers\Agent\Agent())->isDesktop())
+                                                            <a href="{{ route('cdcs.viewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
+                                                                {{ $incoming->RegisterID }}
+                                                            </a>
+                                                        @elseif((new \Jenssegers\Agent\Agent())->isMobile())
+                                                            <a href="{{ route('cdcs.mobileviewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
+                                                                {{ $incoming->RegisterID }}
+                                                            </a>
+                                                        @elseif((new \Jenssegers\Agent\Agent())->isTablet())
+                                                            <a href="{{ route('cdcs.mobileviewpdf', ['id' => $incoming->RegisterID])}}" target="_blank">
+                                                                {{ $incoming->RegisterID }}
+                                                            </a>
+                                                        @endif
+
                                                     </td>
                                                     <td><p>{{ date('d-M-y', strtotime($incoming->IssuedDate)) }}</p></td>
                                                     <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="From : {{ $incoming->DocFrom }}">{{ Str::limit($incoming->DocFrom, 10) }}</p></td>
@@ -210,9 +224,22 @@
                                                         
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('cdcs.viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
+                                                        {{-- <a href="{{ route('cdcs.viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
                                                             {{ $outgoing->RegisterID }}
-                                                        </a>
+                                                        </a> --}}
+                                                        @if((new \Jenssegers\Agent\Agent())->isDesktop())
+                                                            <a href="{{ route('cdcs.viewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
+                                                                {{ $outgoing->RegisterID }}
+                                                            </a>
+                                                        @elseif((new \Jenssegers\Agent\Agent())->isMobile())
+                                                            <a href="{{ route('cdcs.mobileviewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
+                                                                {{ $outgoing->RegisterID }}
+                                                            </a>
+                                                        @elseif((new \Jenssegers\Agent\Agent())->isTablet())
+                                                            <a href="{{ route('cdcs.mobileviewpdf', ['id' => $outgoing->RegisterID])}}" target="_blank">
+                                                                {{ $outgoing->RegisterID }}
+                                                            </a>
+                                                        @endif
                                                     </td>
                                                     <td><p>{{ date('d-M-y', strtotime($outgoing->IssuedDate)) }}</p></td>
                                                     <td><p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="From : {{ $outgoing->DocFrom }}">{{ Str::limit($outgoing->DocFrom, 10) }}</p></td>

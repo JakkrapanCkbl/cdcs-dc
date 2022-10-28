@@ -165,6 +165,33 @@
         $(document).ready(function() {
             $('#table').DataTable();
         } );
+
+
+        $(document).ready(function() {
+            $('#table_dwg').DataTable({
+                dom: "Bfrtip",
+                buttons: ["excel"],
+                oLanguage: {"sSearch": "Outgoing Filter"},
+                scrollX: true,
+                scrollY: '50vh',
+                scrollCollapse: true,
+                paging: false,
+                columnDefs: [
+                    { width: 10, targets: 0 },
+                    { width: 10, targets: 1 },
+                    { width: 200, targets: 2 },
+                    { width: 10, targets: 3 },
+                    { width: 300, targets: 4 },
+                    { width: 80, targets: 5 },
+                    { width: 200, targets: 6 },
+                    { width: 10, targets: 7 },
+                    { width: 200, targets: 8 },
+                ],
+                fixedColumns: true,
+            });
+        });
+
+
     </script>
     
     

@@ -21,12 +21,12 @@
                     @csrf
                     <div class="form-group">
                         <label for="loginname">Login Name</label>
-                        <input type="text" class="form-control" name="loginname" placeholder="Enter login name" value="{{old('loginname')}}">
+                        <input type="text" autocomplete="off" class="form-control" name="loginname" placeholder="Enter login name" value="{{old('loginname')}}">
                         <span class="text-danger">@error('loginname') {{ $message }} @enderror</span>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Enter password" value="{{ old('password') }}">
+                        <input type="password" autocomplete="off" class="form-control" name="password" placeholder="Enter password" value="{{ old('password')}}">
                         <span class="text-danger">@error('password') {{ $message }} @enderror</span>
                     </div>
                     <div class="form-group">

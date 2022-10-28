@@ -24,6 +24,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/lineviewpdf/{id}', [CdcsController::class, 'lineview_pdf'])->name('lineviewpdf');
+Route::get('/viewscad/{id}', [DrawingController::class, 'view_cad'])->name('viewscad');
+
+
+
 
 Route::prefix('it')->name('it.')->group(function(){
     Route::middleware(['guest:it','PreventBackHistory'])->group(function(){
@@ -44,9 +48,11 @@ Route::prefix('drawing')->name('drawing.')->group(function(){
     });
 
     Route::middleware(['auth:drawing','PreventBackHistory'])->group(function(){
-        //Route::view('/home','drawing.home')->name('home');
         Route::get('/home', [DrawingController::class, 'index'])->name('home');
         Route::post('logout',[DrawingController::class,'logout'])->name('logout');
+        Route::get('/dwg_search', [DrawingController::class, 'dwg_search'])->name('dwg_search');
+        Route::get('/viewcad/{id}', [DrawingController::class, 'view_cad'])->name('viewcad');
+
     });
 });
 

@@ -314,10 +314,10 @@
                     { width: 100, targets: 13 },
                 ],
                 fixedColumns: true,
-               
-
             });
-        } );
+        });
+
+
     </script>
    
 </body>
