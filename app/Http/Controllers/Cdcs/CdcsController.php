@@ -20,6 +20,7 @@ class CdcsController extends Controller
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%IB%')
             ->orderBy('IssuedDate', 'DESC')
+            ->orderBy('CodeNumber', 'DESC')
             ->limit(25)
             ->get();
             // for use paginate-----
@@ -35,6 +36,7 @@ class CdcsController extends Controller
             ->where('ShowContract','=','02')
             ->where('RegisterID','not like','%OB%')
             ->orderBy('IssuedDate', 'DESC')
+            ->orderBy('CodeNumber', 'DESC')
             ->limit(25)
             ->get();
             //for use paginate----------
@@ -100,6 +102,9 @@ class CdcsController extends Controller
                         // echo "key = " . $key . ", value = " . $value . "\n";
                         if($key == 0) {
                             $strsql = $strsql . "AND (DocSubject LIKE '%" . trim($value) . "%' ";
+                            if ($numItems == 1) {
+                                $strsql = $strsql . ") ";
+                            }
                         }elseif($key == ($numItems - 1)) {
                             $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%') ";
                         }
@@ -108,7 +113,7 @@ class CdcsController extends Controller
                         }
                     }
                 }
-                $strsql = $strsql . "ORDER BY IssuedDate DESC ";
+                $strsql = $strsql . "ORDER BY IssuedDate, CodeNumber ";
                 // echo $strsql;
                 $incomings = DB::select($strsql);
                 //------------------------------------------------------------------------------------
@@ -121,6 +126,9 @@ class CdcsController extends Controller
                     foreach ($myArray as $key => $value) {
                         if($key == 0) {
                             $strsql = $strsql . "AND (DocSubject LIKE '%" . trim($value) . "%' ";
+                            if ($numItems == 1) {
+                                $strsql = $strsql . ") ";
+                            }
                         }elseif($key == ($numItems - 1)) {
                             $strsql = $strsql . "AND DocSubject LIKE '%" . trim($value) . "%') ";
                         }
@@ -129,7 +137,7 @@ class CdcsController extends Controller
                         }
                     }
                 }
-                $strsql = $strsql . "ORDER BY IssuedDate DESC ";
+                $strsql = $strsql . "ORDER BY IssuedDate, CodeNumber ";
                 $outgoings = DB::select($strsql);
                 
             }else{ //case simple
@@ -141,6 +149,7 @@ class CdcsController extends Controller
                     $query->where($sf,'like','%'. $search_text .'%');
                 })
                 ->orderBy('IssuedDate', 'DESC')
+                ->orderBy('CodeNumber', 'DESC')
                 ->get();
                 // ->paginate(10);
                 // $incomings->appends($request->all());
@@ -153,6 +162,7 @@ class CdcsController extends Controller
                         $query->where($sf,'like','%'.$search_text.'%');
                     })
                     ->orderBy('IssuedDate', 'DESC')
+                    ->orderBy('CodeNumber', 'DESC')
                     ->get();
                     // ->paginate(10);
                     // $outgoings->appends($request->all());

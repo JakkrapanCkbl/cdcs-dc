@@ -102,17 +102,22 @@ class DrawingController extends Controller
             $checkopenpdf = $this->CheckOpenPdf($id);
             //dd($checkopenpdf);
             if ($checkopenpdf == 2 ) {
-                $fullpath = Storage::disk('azure')->url('').'Drawings/'.$pieces[4].'/PDF/FromConsult/'.$fn.$accesskey;
+                //$fullpath = Storage::disk('azure')->url('').'Drawings/'.$pieces[4].'/PDF/FromConsult/'.$fn.$accesskey;
+                $fullpath = "https://dccrstorage.file.core.windows.net/docs/Drawings/AR/PDF/FromConsult/W-DC2-BULD-B010-AR-2001-001-A.pdf".$accesskey;
+                //dd($fullpath);
+                return view('cdcs.viewpdf',[
+                    'id' => $id,
+                    'fullpath' => $fullpath 
+                ]);
             }elseif ($checkopenpdf == 1 ) {
                 $fullpath = Storage::disk('azure')->url('').'Drawings/'.$pieces[4].'/PDF/'.$fn.$accesskey;
+                return view('cdcs.viewpdf',[
+                    'id' => $id,
+                    'fullpath' => $fullpath 
+                ]);
             }else{
                 return redirect()->back() ->with('alert', 'Pdf is nothing');
-            }
-            //dd($fullpath);
-            return view('cdcs.viewpdf',[
-                'id' => $id,
-                'fullpath' => $fullpath 
-            ]);
+            }            
         }
     }
 

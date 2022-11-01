@@ -275,6 +275,7 @@
                 scrollY: '50vh',
                 scrollCollapse: true,
                 paging: false,
+                order: [[2, "desc" ], [ 18, "desc" ]],
                 columnDefs: [
                     { width: 10, targets: 0 },
                     { width: 180, targets: 1 },
@@ -299,6 +300,7 @@
                 scrollY: '50vh',
                 scrollCollapse: true,
                 paging: false,
+                order: [[2, "desc" ], [ 16, "desc" ]],
                 columnDefs: [
                     { width: 10, targets: 0 },
                     { width: 180, targets: 1 },

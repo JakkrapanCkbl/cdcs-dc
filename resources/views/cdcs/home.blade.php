@@ -88,7 +88,7 @@
                                             <th class="text-center">Remark</th>
                                             <th class="text-center">Doc Register</th>
                                             <th class="text-center">Doc Category</th>
-
+                                            <th class="text-center">CodeNumber</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -155,6 +155,7 @@
                                                     <td><p>{{ $incoming->Remark }}</p></td>
                                                     <td><p>{{ date('d-M-y', strtotime($incoming->RegDate)) }}</p></td>
                                                     <td><p>{{ $incoming->ShowDocCat }}</p></td>
+                                                    <td><p>{{ $incoming->CodeNumber }}</p></td>
                                                     {{-- <td><button class="edit-modal btn btn-info"
                                                         data-info="{{$item->id}},{{$item->first_name}},{{$item->last_name}},{{$item->email}},{{$item->gender}},{{$item->country}},{{$item->salary}}">
                                                         <span class="glyphicon glyphicon-edit"></span> Edit
@@ -194,6 +195,7 @@
                                             <th>Remark</th>
                                             <th>Doc Register</th>
                                             <th>Doc Category</th>
+                                            <th>CodeNumber</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -255,6 +257,7 @@
                                                     <td><p>{{ $outgoing->Remark }}</p></td>
                                                     <td><p>{{ date('d-M-y', strtotime($outgoing->RegDate)) }}</p></td>
                                                     <td><p>{{ $outgoing->ShowDocCat }}</p></td>
+                                                    <td><p>{{ $outgoing->CodeNumber }}</p></td>
                                                 </tr>
                                             @endforeach
                                         @else
