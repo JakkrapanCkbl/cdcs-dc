@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\MainController;
 
 
 class CdcsController extends Controller
@@ -239,14 +240,14 @@ class CdcsController extends Controller
                 //dd('is sender_ref');
                 //case INCOMING referto  (and outgoing is registerid = DC03-02-OE-PM03-00032
                 $keep_id = $id;
-                $id = $this->MyFind("ReferToDoc",
+                $id = (new MainController)->MyFind("ReferToDoc",
                 "RegisterID", 
                 "WHERE ReferTo = '" . $id . "' AND substring(RegisterID,9,1) = 'O'", 
                 "ORDER BY RegisterID");
 
                 if ($id ==  null) {
                     // case OUTGOING responde to
-                    $id = $this->MyFind("RegisterDoc",
+                    $id = (new MainController)->MyFind("RegisterDoc",
                     "RegisterID", 
                     "WHERE CrossRef = '" . $keep_id . "' ", 
                     "ORDER BY RegisterID");
@@ -296,24 +297,6 @@ class CdcsController extends Controller
             return 1;
         }else{
             return 0;
-        }
-    }
-
-    public function MyFind($TableName, $FieldOut, $StrFilter, $OrderBy) {
-        $strsql = "SELECT " . $FieldOut . " FROM " . $TableName;
-        if($StrFilter != ''){
-            $strsql = $strsql . " " . $StrFilter;
-        }
-        if($OrderBy != ''){
-            $strsql = $strsql . " " . $OrderBy;
-        }
-        $result = DB::select($strsql);
-        
-        if ($result == null) {
-            // dd("null");
-            return null;
-        }else {
-            return $result[0]->$FieldOut;
         }
     }
 

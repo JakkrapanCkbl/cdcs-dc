@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\MainController;
+
 
 class DrawingController extends Controller
 {
@@ -44,24 +46,6 @@ class DrawingController extends Controller
         // ->get();
 
         return view('drawing.home',['drawings'=>$drawings, 'options'=>'1']);
-    }
-
-    public function MyFind($TableName, $FieldOut, $StrFilter, $OrderBy) {
-        $strsql = "SELECT " . $FieldOut . " FROM " . $TableName;
-        if($StrFilter != ''){
-            $strsql = $strsql . " " . $StrFilter;
-        }
-        if($OrderBy != ''){
-            $strsql = $strsql . " " . $OrderBy;
-        }
-        $result = DB::select($strsql);
-        
-        if ($result == null) {
-            // dd("null");
-            return null;
-        }else {
-            return $result[0]->$FieldOut;
-        }
     }
 
     public function dwg_list(Request $request)
@@ -126,11 +110,11 @@ class DrawingController extends Controller
         $pieces = explode("-", $id);
         //dd(substr($id,2,25));
         //result = 2 is CscEndorsed, 1 is DesignerEndorsed, 0 is Designer Review
-        $csc = $this->MyFind("Drawing_Register",
+        $csc = (new MainController)->MyFind("Drawing_Register",
         "ChkCSC_Endorsed", 
         "WHERE Status = '" . $pieces[0] . "' AND Dwg_no = '" . substr($id,2,25) . "' AND Revision = '" . $pieces[7] . "' ",
         "ORDER BY Dwg_no");
-        $dsg = $this->MyFind("Drawing_Register",
+        $dsg = (new MainController)->MyFind("Drawing_Register",
         "ChkAecom_Endorsed", 
         "WHERE Status = '" . $pieces[0] . "' AND Dwg_no = '" . substr($id,2,25) . "' AND Revision = '" . $pieces[7] . "' ",
         "ORDER BY Dwg_no");
