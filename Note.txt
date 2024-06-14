@@ -1,0 +1,5 @@
+CDCS-PL and CDCS-DC 
+Project information
+-------------------------------
+PHP Version 7.3.3
+Laravel Framework 8.83.9

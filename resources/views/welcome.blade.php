@@ -70,7 +70,7 @@
                                 <ul>
                                     <li><a href="{{ route('cdcs.login') }}">CDCS</a></li>
                                     <li><a href="{{ route('drawing.login') }}">Drawing</a></li>
-                                    <li><a href="{{ route('it.login') }}">IT Data</a></li>
+                                    {{-- <li><a href="{{ route('it.login') }}">IT Data</a></li> --}}
                                     {{-- @if (Route::has('login'))
                                         @auth
                                             <li><a href="{{ url('/home') }}">CDCS</a></li>
